@@ -1,0 +1,155 @@
+"use client";
+
+import React, { useState } from "react";
+import DashboardLayout from "@/src/components/layout/DashboardLayout";
+import PostCard from "@/src/components/dashboard/PostCard";
+import { Image as ImageIcon, Sparkles, MapPin, BarChart2, BadgeCheck, Target } from "lucide-react";
+import { useUserStore } from "@/src/store/useUserStore";
+
+const FEED_POSTS = [
+  {
+    id: 1,
+    author: "جمعية البريد الخيرية",
+    role: "جمعية معتمدة",
+    time: "٢ س",
+    category: "مبادرة بيئية",
+    categoryColor: "bg-emerald-500/10 text-emerald-700",
+    content: "أطلقنا اليوم مبادرتنا الخضراء لغرس 1000 شجرة في الأحياء السكنية بمشاركة أكثر من 200 متطوع. نؤمن أن التنمية المستدامة تبدأ من الحي الواحد. 🌱",
+    likes: 248, comments: 37, reposts: 85,
+    avatarGradient: "from-emerald-200 to-teal-300",
+  },
+  {
+    id: 2,
+    author: "أحمد عبد العزيز",
+    role: "داعم فضي",
+    time: "٥ س",
+    category: "كيان جديد",
+    categoryColor: "bg-blue-500/10 text-blue-700",
+    content: "يسعدني الإعلان عن ترخيص كيان «روافد للتمكين والتدريب» رسمياً اليوم! الكيان سيقدم برامج تأهيل مهني للشباب والشابات على مدار العام القادم. 🎉",
+    likes: 542, comments: 95, reposts: 124,
+    avatarGradient: "from-blue-200 to-indigo-300",
+  },
+  {
+    id: 3,
+    author: "مروة علي",
+    role: "مستشارة تنموية",
+    time: "أمس",
+    category: "تقنية وتنمية",
+    categoryColor: "bg-violet-500/10 text-violet-700",
+    content: "جربت تنموي AI لصياغة الخطة الاستراتيجية للربع الثاني — وفّرت أكثر من 6 ساعات عمل في 20 دقيقة فقط. ✨\n\nهل جربتم المساعد الذكي؟ ما رأيكم؟",
+    likes: 1300, comments: 204, reposts: 389,
+    avatarGradient: "from-violet-200 to-purple-300",
+  },
+  {
+    id: 4,
+    author: "محمد الشهري",
+    role: "مؤسس",
+    time: "يومان",
+    content: "سؤال للمجتمع 🧵\n\nما أكثر تحدٍّ واجهتموه عند إنشاء الكيانات التنموية؟\n\nأعمل على تقرير شامل وأريد أن يعكس تجاربكم الحقيقية على الأرض.",
+    likes: 758, comments: 231, reposts: 97,
+    avatarGradient: "from-amber-200 to-orange-300",
+  },
+  {
+    id: 5,
+    author: "نورة الحربي",
+    role: "متطوعة نشطة",
+    time: "٣ أيام",
+    category: "قصة نجاح",
+    categoryColor: "bg-rose-500/10 text-rose-700",
+    content: "بعد 6 أشهر من الانضمام لمجتمع تنموي، تمكنت من تحويل فكرة بسيطة إلى مشروع يخدم 300 أسرة في حيّي 💚\n\nالشكر لكل من آمن بي في هذه الرحلة الجميلة 🙏",
+    likes: 4200, comments: 318, reposts: 892,
+    avatarGradient: "from-rose-200 to-pink-300",
+  },
+];
+
+export default function Home() {
+  const [postText, setPostText] = useState("");
+  const { isFounder } = useUserStore();
+
+  const COMPOSER_ACTIONS = [
+    { icon: ImageIcon,  label: "صورة",    color: "text-primary  hover:bg-primary/10"  },
+    { icon: BarChart2,  label: "استطلاع", color: "text-primary  hover:bg-primary/10"  },
+    { icon: MapPin,     label: "موقع",    color: "text-primary  hover:bg-primary/10"  },
+    ...(isFounder ? [{ icon: Target, label: "إرفاق مبادرة", color: "text-teal-600 hover:bg-teal-50" }] : []),
+    { icon: Sparkles,   label: "تنموي AI",color: "text-secondary hover:bg-secondary/10" },
+  ];
+
+  return (
+    <DashboardLayout>
+      {/* ── Composer ───────────────────────────── */}
+      <div className="border-b border-border px-4 pt-4 pb-3">
+        <form onSubmit={(e) => { e.preventDefault(); setPostText(""); }}>
+          <div className="flex gap-3">
+            {/* Avatar */}
+            <div className="relative shrink-0">
+              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-primary/30 to-secondary/30 flex items-center justify-center ring-1 ring-border">
+                <span className="text-[13px] font-bold text-foreground">ع</span>
+              </div>
+              {isFounder && (
+                <div className="absolute -bottom-1 -right-1 bg-surface rounded-full p-0.5 shadow-sm">
+                  <BadgeCheck className="w-3.5 h-3.5 text-teal-500" strokeWidth={2.5} />
+                </div>
+              )}
+            </div>
+
+            <div className="flex-1 min-w-0">
+              {/* Textarea */}
+              <textarea
+                value={postText}
+                onChange={(e) => setPostText(e.target.value)}
+                placeholder={isFounder ? "شارك آخر أخبار كيانك، أو أطلق مبادرة جديدة..." : "ما الذي يدور في ذهنك؟ شارك فكرة أو مقترحاً..."}
+                rows={2}
+                className="w-full resize-none text-[15px] text-foreground
+                  placeholder:text-muted-fg bg-transparent border-none outline-none
+                  leading-relaxed text-right pt-1.5 pb-0"
+              />
+
+              {/* Char counter + divider */}
+              <div className="flex items-center justify-between mt-3 pt-3 border-t border-border">
+                {/* Media action icons */}
+                <div className="flex items-center gap-0.5 -ml-2">
+                  {COMPOSER_ACTIONS.map(({ icon: Icon, label, color }) => (
+                    <button
+                      key={label}
+                      type="button"
+                      aria-label={label}
+                      className={`flex items-center justify-center w-9 h-9
+                        rounded-full ${color} transition-colors`}
+                    >
+                      <Icon className="w-[18px] h-[18px]" strokeWidth={2} />
+                    </button>
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-3">
+                  {/* Character counter */}
+                  {postText.length > 0 && (
+                    <span className={`text-xs font-medium tabular-nums ${postText.length > 260 ? "text-rose-500" : "text-muted-fg"}`}>
+                      {280 - postText.length}
+                    </span>
+                  )}
+                  {/* Post button */}
+                  <button
+                    type="submit"
+                    disabled={!postText.trim() || postText.length > 280}
+                    className="px-5 py-2 rounded-full text-[15px] font-bold text-white
+                      bg-tanmawy-gradient transition-all duration-150
+                      disabled:bg-none disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none disabled:opacity-70 disabled:cursor-not-allowed
+                      shadow-sm hover:shadow-md hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    نشر
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      {/* ── Feed ──────────────────────────────── */}
+      {FEED_POSTS.map((post) => (
+        <PostCard key={post.id} {...post} />
+      ))}
+    </DashboardLayout>
+  );
+}

@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800;900&display=swap');
+@import 'tailwindcss';
+
+/* ─────────────────────────────────────────────
+   TANMAWY DESIGN SYSTEM — Light Premium Theme
+   Twitter / Threads Social Aesthetic
+───────────────────────────────────────────── */
+:root {
+  /* ⚑ Force light mode — ignores OS/browser dark-mode setting */
+  color-scheme: light;
+
+  /* Surfaces */
+  --background:     #f8fafc;
+  --surface:        #ffffff;
+  --border:         #e2e8f0;
+
+  /* Text */
+  --foreground:     #0f172a;
+  --muted-fg:       #64748b;
+
+  /* Brand */
+  --primary:        #14b8a6;
+  --primary-light:  #5eead4;
+  --secondary:      #6366f1;
+  --primary-hover:  #0f766e;
+}
+
+@theme inline {
+  /* Core surface tokens */
+  --color-background:    var(--background);
+  --color-surface:       var(--surface);
+  --color-foreground:    var(--foreground);
+  --color-border:        var(--border);
+  --color-muted-fg:      var(--muted-fg);
+
+  /* Brand tokens — used by bg-primary, text-secondary, etc. */
+  --color-primary:       var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-secondary:     var(--secondary);
+  --color-primary-hover: var(--primary-hover);
+
+  /* Legacy tanmawy-* aliases kept for backward compat */
+  --color-tanmawy-primary:       var(--primary);
+  --color-tanmawy-primary-hover: var(--primary-hover);
+  --color-tanmawy-secondary:     #e0f2fe; /* kept for badge tints */
+  --color-tanmawy-accent:        var(--primary-light);
+  --color-tanmawy-dark:          #0f172a;
+  --color-tanmawy-muted:         var(--muted-fg);
+
+  /* Typography */
+  --font-sans: 'Cairo', var(--font-geist-sans), ui-sans-serif, sans-serif;
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ── Disable Tailwind dark variant globally ── */
+/* Tailwind v4: override the dark selector to   */
+/* never match, so dark:* utilities do nothing. */
+@variant dark (&:where(.dark, .dark *));
+
+/* ── Base ────────────────────────────────── */
+body {
+  background: var(--background);
+  color:      var(--foreground);
+  font-family: 'Cairo', ui-sans-serif, sans-serif;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Scrollbar ────────────────────────────── */
+::-webkit-scrollbar       { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* ── Utilities ────────────────────────────── */
+.transition-smooth {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@utility scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+}
+
+@utility bg-tanmawy-gradient {
+  background-image: linear-gradient(135deg, #14b8a6 0%, #5eead4 50%, #6366f1 100%) !important;
+  background-size: 200% 200% !important;
+  transition: background-position 0.5s ease, transform 0.2s ease, box-shadow 0.2s ease !important;
+  color: #ffffff !important;
+
+  &:hover {
+    background-position: right center !important;
+  }
+}
+
+/* Bulletproof Standard CSS Fallback */
+.bg-tanmawy-gradient {
+  background-image: linear-gradient(135deg, #14b8a6 0%, #5eead4 50%, #6366f1 100%) !important;
+  background-size: 200% 200% !important;
+  transition: background-position 0.5s ease, transform 0.2s ease, box-shadow 0.2s ease !important;
+  color: #ffffff !important;
+}
+.bg-tanmawy-gradient:hover {
+  background-position: right center !important;
+}
+
+/* ── Auth Animations ──────────────────────── */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes floatY {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes spinOnce {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.auth-gradient-bg {
+  background: linear-gradient(135deg, #0f766e 0%, #14b8a6 25%, #5eead4 50%, #6366f1 75%, #4338ca 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 8s ease infinite;
+}
+.float-logo {
+  animation: floatY 4s ease-in-out infinite;
+}
+.fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
