@@ -6,9 +6,6 @@ import { User, Building2 } from "lucide-react";
 export default function RoleToggle() {
   const { isFounder, toggleRole } = useUserStore();
 
-  if (process.env.NODE_ENV !== "development") {
-    return null;
-  }
 
   return (
     <div className="fixed bottom-4 left-4 z-50">
