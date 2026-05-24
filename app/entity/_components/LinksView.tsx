@@ -9,12 +9,12 @@ export function LinksView() {
   return (
     <div className="space-y-4">
       {links.map((link, i) => (
-        <div key={i} className="bg-white border border-slate-100 rounded-2xl p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div key={i} className="bg-white dark:bg-slate-900/50 border border-slate-100 dark:border-white/5 rounded-2xl p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h4 className="text-[14px] font-black text-slate-900 mb-1">{link.name}</h4>
-            <p className="text-[12px] text-slate-500 font-mono" dir="ltr">{link.url}</p>
+            <h4 className="text-[14px] font-black text-slate-900 dark:text-slate-100 mb-1">{link.name}</h4>
+            <p className="text-[12px] text-slate-500 dark:text-slate-400 font-mono" dir="ltr">{link.url}</p>
           </div>
-          <button className="flex items-center justify-center gap-2 px-4 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 rounded-xl text-[13px] font-bold transition-colors">
+          <button className="flex items-center justify-center gap-2 px-4 py-2 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700/80 text-slate-700 dark:text-slate-200 rounded-xl text-[13px] font-bold transition-colors">
             <Copy className="w-4 h-4" />
             نسخ الرابط
           </button>

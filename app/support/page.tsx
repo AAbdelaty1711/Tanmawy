@@ -10,7 +10,7 @@ import {
 
 /* ── Helpers ─────────────────────────────────────────── */
 const inputCls =
-  "w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-[14px] text-slate-800 placeholder:text-slate-400 outline-none transition-all focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/10";
+  "w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900/50 text-[14px] text-slate-800 dark:text-slate-105 placeholder:text-slate-400 outline-none transition-all focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-2 focus:ring-primary/10";
 
 function fadeUpProps(i: number) {
   return {
@@ -32,12 +32,12 @@ function FAQItem({
 }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="border border-slate-100 rounded-xl overflow-hidden">
+    <div className="border border-slate-100 dark:border-white/5 rounded-xl overflow-hidden">
       <button
         onClick={() => setOpen((o) => !o)}
-        className="w-full flex items-center justify-between gap-3 px-5 py-4 text-right hover:bg-slate-50 transition-colors"
+        className="w-full flex items-center justify-between gap-3 px-5 py-4 text-right hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
       >
-        <span className="text-[14px] font-bold text-slate-800 leading-snug">
+        <span className="text-[14px] font-bold text-slate-800 dark:text-slate-100 leading-snug">
           {question}
         </span>
         <motion.div
@@ -45,7 +45,7 @@ function FAQItem({
           transition={{ duration: 0.2 }}
           className="shrink-0"
         >
-          <ChevronDown className="w-4 h-4 text-slate-400" />
+          <ChevronDown className="w-4 h-4 text-slate-400 dark:text-slate-550" />
         </motion.div>
       </button>
       <AnimatePresence initial={false}>
@@ -58,7 +58,7 @@ function FAQItem({
             transition={{ duration: 0.25 }}
             className="overflow-hidden"
           >
-            <p className="px-5 pb-4 text-[13.5px] text-slate-500 leading-relaxed border-t border-slate-100 pt-3">
+            <p className="px-5 pb-4 text-[13.5px] text-slate-500 dark:text-slate-400 leading-relaxed border-t border-slate-100 dark:border-white/5 pt-3">
               {answer}
             </p>
           </motion.div>
@@ -79,13 +79,13 @@ function SupportForm() {
         animate={{ opacity: 1, scale: 1 }}
         className="flex flex-col items-center justify-center py-10 text-center"
       >
-        <div className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center mb-4">
+        <div className="w-14 h-14 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900/40 flex items-center justify-center mb-4">
           <CheckCircle2 className="w-7 h-7 text-emerald-500" strokeWidth={2} />
         </div>
-        <h3 className="text-[16px] font-black text-slate-900 mb-1">
+        <h3 className="text-[16px] font-black text-slate-900 dark:text-slate-100 mb-1">
           تم إرسال تذكرتك بنجاح!
         </h3>
-        <p className="text-[13px] text-slate-500 leading-relaxed max-w-xs">
+        <p className="text-[13px] text-slate-500 dark:text-slate-400 leading-relaxed max-w-xs">
           سيتواصل معك فريق الدعم خلال 24 ساعة. رقم تذكرتك:{" "}
           <span className="font-bold text-primary">SUP-2026-03821</span>
         </p>
@@ -109,7 +109,7 @@ function SupportForm() {
     >
       {/* Issue Type */}
       <div className="space-y-1.5">
-        <label className="text-[13px] font-bold text-slate-700 block">
+        <label className="text-[13px] font-bold text-slate-700 dark:text-slate-350 block">
           نوع المشكلة <span className="text-rose-400 text-[11px]">*</span>
         </label>
         <div className="relative">
@@ -124,13 +124,13 @@ function SupportForm() {
             <option value="report">الإبلاغ عن محتوى</option>
             <option value="other">أخرى</option>
           </select>
-          <ChevronDown className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+          <ChevronDown className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-500 pointer-events-none" />
         </div>
       </div>
 
       {/* Details */}
       <div className="space-y-1.5">
-        <label className="text-[13px] font-bold text-slate-700 block">
+        <label className="text-[13px] font-bold text-slate-700 dark:text-slate-350 block">
           تفاصيل المشكلة <span className="text-rose-400 text-[11px]">*</span>
         </label>
         <textarea
@@ -175,11 +175,11 @@ function DisclaimerCard() {
   return (
     <motion.div
       {...fadeUpProps(1)}
-      className="bg-slate-50 border border-slate-200 rounded-2xl p-6 relative overflow-hidden sticky top-20"
+      className="bg-slate-50 dark:bg-slate-900/30 border border-slate-200 dark:border-white/5 rounded-2xl p-6 relative overflow-hidden sticky top-20"
     >
       {/* Watermark background icon */}
       <div className="absolute -left-6 -bottom-6 opacity-[0.04] pointer-events-none select-none">
-        <ShieldAlert className="w-48 h-48 text-slate-900" strokeWidth={1} />
+        <ShieldAlert className="w-48 h-48 text-slate-900 dark:text-slate-300" strokeWidth={1} />
       </div>
 
       {/* Top accent line */}
@@ -191,10 +191,10 @@ function DisclaimerCard() {
           <ShieldCheck className="w-5 h-5 text-secondary" strokeWidth={2} />
         </div>
         <div>
-          <h3 className="text-[14px] font-black text-slate-900">
+          <h3 className="text-[14px] font-black text-slate-900 dark:text-slate-100">
             إخلاء مسؤولية تنظيمي
           </h3>
-          <p className="text-[11px] text-slate-400 font-medium">
+          <p className="text-[11px] text-slate-400 dark:text-slate-500 font-medium">
             وفقاً للأنظمة السعودية المعتمدة
           </p>
         </div>
@@ -207,8 +207,8 @@ function DisclaimerCard() {
             key={i}
             className={`flex items-start gap-3 p-3.5 rounded-xl border transition-colors ${
               i === 3
-                ? "bg-rose-50 border-rose-100"
-                : "bg-white border-slate-100"
+                ? "bg-rose-50 dark:bg-rose-950/20 border-rose-100 dark:border-rose-900/30"
+                : "bg-white dark:bg-slate-800/40 border-slate-100 dark:border-white/5"
             }`}
           >
             <span className="text-[16px] shrink-0 leading-none mt-0.5">
@@ -216,7 +216,7 @@ function DisclaimerCard() {
             </span>
             <p
               className={`text-[12.5px] leading-relaxed ${
-                i === 3 ? "text-rose-800 font-semibold" : "text-slate-700"
+                i === 3 ? "text-rose-800 dark:text-rose-400 font-semibold" : "text-slate-700 dark:text-slate-300"
               }`}
             >
               {rule.text}
@@ -226,16 +226,16 @@ function DisclaimerCard() {
       </div>
 
       {/* Footer warning */}
-      <div className="mt-5 flex items-start gap-2 p-3 rounded-xl bg-amber-50 border border-amber-100">
+      <div className="mt-5 flex items-start gap-2 p-3 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-100 dark:border-amber-900/30">
         <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" strokeWidth={2} />
-        <p className="text-[11.5px] text-amber-700 leading-relaxed font-medium">
+        <p className="text-[11.5px] text-amber-700 dark:text-amber-450 leading-relaxed font-medium">
           للاستفسار عن الإطار التنظيمي تواصل مع هيئة الهلال الأحمر أو وزارة الموارد البشرية والتنمية الاجتماعية.
         </p>
       </div>
 
       {/* Official links */}
       <div className="mt-4 space-y-1.5">
-        <p className="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-2">
+        <p className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">
           جهات رسمية
         </p>
         {[
@@ -245,12 +245,12 @@ function DisclaimerCard() {
           <a
             key={link}
             href="#"
-            className="flex items-center justify-between px-3 py-2 rounded-lg bg-white border border-slate-100 hover:border-primary/30 transition-colors group"
+            className="flex items-center justify-between px-3 py-2 rounded-lg bg-white dark:bg-slate-800/40 border border-slate-100 dark:border-white/5 hover:border-primary/30 transition-colors group"
           >
-            <span className="text-[12px] font-semibold text-slate-600 group-hover:text-primary transition-colors">
+            <span className="text-[12px] font-semibold text-slate-600 dark:text-slate-300 group-hover:text-primary transition-colors">
               {link}
             </span>
-            <ExternalLink className="w-3 h-3 text-slate-300 group-hover:text-primary transition-colors" />
+            <ExternalLink className="w-3 h-3 text-slate-300 dark:text-slate-600 group-hover:text-primary transition-colors" />
           </a>
         ))}
       </div>
@@ -266,10 +266,10 @@ export default function SupportPage() {
 
         {/* ── Header ── */}
         <motion.div {...fadeUpProps(0)} className="mb-6">
-          <h1 className="text-[20px] font-black text-slate-900 leading-tight mb-1">
+          <h1 className="text-[20px] font-black text-slate-900 dark:text-slate-100 leading-tight mb-1">
             مساعدة ودعم فني
           </h1>
-          <p className="text-[13.5px] text-slate-500 leading-relaxed">
+          <p className="text-[13.5px] text-slate-500 dark:text-slate-400 leading-relaxed">
             فريق تنموي متواجد دائماً لضمان تجربة سلسة وآمنة لكافة أعضاء المجتمع.
           </p>
         </motion.div>
@@ -277,17 +277,17 @@ export default function SupportPage() {
         {/* ── Support Form Card ── */}
             <motion.div
               {...fadeUpProps(2)}
-              className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm"
+              className="bg-white dark:bg-slate-800/40 rounded-2xl border border-slate-200 dark:border-white/5 p-6 shadow-sm"
             >
               <div className="flex items-center gap-2.5 mb-5">
                 <div className="w-9 h-9 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
                   <LifeBuoy className="w-5 h-5 text-primary" strokeWidth={2} />
                 </div>
                 <div>
-                  <h2 className="text-[15px] font-black text-slate-900 leading-tight">
+                  <h2 className="text-[15px] font-black text-slate-900 dark:text-slate-100 leading-tight">
                     تواصل مع الدعم الفني
                   </h2>
-                  <p className="text-[11px] text-slate-400 font-medium">
+                  <p className="text-[11px] text-slate-400 dark:text-slate-550 font-medium">
                     متوسط وقت الاستجابة: أقل من 24 ساعة
                   </p>
                 </div>
@@ -298,9 +298,9 @@ export default function SupportPage() {
             {/* FAQ Card */}
             <motion.div
               {...fadeUpProps(3)}
-              className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm"
+              className="bg-white dark:bg-slate-800/40 rounded-2xl border border-slate-200 dark:border-white/5 p-6 shadow-sm"
             >
-              <h2 className="text-[15px] font-black text-slate-900 mb-4">
+              <h2 className="text-[15px] font-black text-slate-900 dark:text-slate-100 mb-4">
                 الأسئلة الشائعة
               </h2>
               <div className="space-y-2">

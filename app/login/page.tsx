@@ -46,13 +46,13 @@ function Input({
     <div className="space-y-1.5">
       <label
         htmlFor={id}
-        className="block text-sm font-semibold text-slate-700"
+        className="block text-sm font-semibold text-slate-700 dark:text-slate-300"
       >
         {label}
       </label>
       <div className="relative">
         <Icon
-          className="absolute top-1/2 -translate-y-1/2 right-3.5 w-4 h-4 text-slate-400 pointer-events-none"
+          className="absolute top-1/2 -translate-y-1/2 right-3.5 w-4 h-4 text-slate-400 dark:text-slate-500 pointer-events-none"
           strokeWidth={1.8}
         />
         <input
@@ -61,11 +61,11 @@ function Input({
           placeholder={placeholder}
           className={`
             w-full pr-10 pl-${suffix ? '10' : '4'} py-3 rounded-xl
-            bg-slate-50 border text-[15px] text-slate-800
-            placeholder:text-slate-400
+            bg-slate-50 dark:bg-slate-900/50 border text-[15px] text-slate-800 dark:text-slate-100
+            placeholder:text-slate-400 dark:placeholder:text-slate-600
             outline-none transition-all duration-200
-            focus:bg-white focus:border-teal-400 focus:ring-2 focus:ring-teal-100
-            ${error ? 'border-rose-300 bg-rose-50/40' : 'border-slate-200'}
+            focus:bg-white dark:focus:bg-slate-900 focus:border-teal-400 dark:focus:border-teal-500 focus:ring-2 focus:ring-teal-100 dark:focus:ring-teal-950/30
+            ${error ? 'border-rose-300 bg-rose-50/40 dark:border-rose-900/40 dark:bg-rose-950/20' : 'border-slate-200 dark:border-white/10'}
           `}
           {...rest}
         />
@@ -117,13 +117,15 @@ export default function LoginPage() {
       >
         {/* Header */}
         <div className="space-y-1">
-          <h1 className="text-2xl font-black text-slate-900 tracking-tight">
+          <h1 className="text-2xl font-black text-slate-900 dark:text-slate-100 tracking-tight">
             مرحباً بعودتك
           </h1>
-          <p className="text-[14px] text-slate-500 font-normal leading-relaxed">
+          <p className="text-[14px] text-slate-500 dark:text-slate-400 font-normal leading-relaxed">
             سجّل دخولك للوصول إلى منصة تنموي
           </p>
         </div>
+
+
 
         {/* Form */}
         <form
@@ -152,7 +154,7 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={() => setShowPassword((p) => !p)}
-                className="text-slate-400 hover:text-slate-600 transition-colors"
+                className="text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 transition-colors"
                 aria-label="إظهار كلمة المرور"
               >
                 {showPassword ? (
@@ -169,7 +171,7 @@ export default function LoginPage() {
           <div className="flex justify-end">
             <Link
               href="/forgot-password"
-              className="text-[13px] text-teal-600 hover:text-teal-700 font-semibold transition-colors"
+              className="text-[13px] text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300 font-semibold transition-colors"
             >
               نسيت كلمة المرور؟
             </Link>
@@ -214,20 +216,20 @@ export default function LoginPage() {
 
         {/* Divider */}
         <div className="relative flex items-center gap-3">
-          <div className="flex-1 h-px bg-slate-200" />
-          <span className="text-[12px] text-slate-400 font-medium shrink-0">
+          <div className="flex-1 h-px bg-slate-200 dark:bg-white/5" />
+          <span className="text-[12px] text-slate-400 dark:text-slate-500 font-medium shrink-0">
             أو
           </span>
-          <div className="flex-1 h-px bg-slate-200" />
+          <div className="flex-1 h-px bg-slate-200 dark:bg-white/5" />
         </div>
 
         {/* Register Link */}
         <div className="text-center">
-          <p className="text-[14px] text-slate-500">
+          <p className="text-[14px] text-slate-500 dark:text-slate-400">
             ليس لديك حساب؟{' '}
             <Link
               href="/register"
-              className="text-teal-600 font-bold hover:text-teal-700 transition-colors inline-flex items-center gap-1"
+              className="text-teal-600 dark:text-teal-400 font-bold hover:text-teal-700 dark:hover:text-teal-300 transition-colors inline-flex items-center gap-1"
             >
               إنشاء حساب جديد
               <ArrowLeft className="w-3.5 h-3.5" strokeWidth={2.5} />

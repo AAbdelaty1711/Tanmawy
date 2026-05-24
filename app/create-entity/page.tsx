@@ -2,321 +2,232 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
 import DashboardLayout from "@/src/components/layout/DashboardLayout";
+import { useUserStore } from "@/src/store/useUserStore";
 import {
-  UploadCloud, Building, FileText, Mail, Phone,
-  AlignLeft, ShieldCheck, CheckCircle2, ChevronDown,
+  Building, FileText, ShieldCheck, CheckCircle2, Building2, Calendar, Landmark, ArrowLeft
 } from "lucide-react";
 
-/* ── Shared Input ─────────────────────────────────── */
-function Field({
-  label,
-  id,
-  icon: Icon,
-  children,
-  required,
-}: {
-  label: string;
-  id: string;
-  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-  children: React.ReactNode;
-  required?: boolean;
-}) {
-  return (
-    <div className="space-y-1.5">
-      <label htmlFor={id} className="flex items-center gap-1.5 text-[13px] font-bold text-slate-700">
-        <Icon className="w-3.5 h-3.5 text-slate-400 shrink-0" strokeWidth={2} />
-        {label}
-        {required && <span className="text-rose-400 text-[11px]">*</span>}
-      </label>
-      {children}
-    </div>
-  );
-}
-
-const inputCls =
-  "w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-[14px] text-slate-800 placeholder:text-slate-400 outline-none transition-all focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/10";
-
-/* ── Success State ────────────────────────────────── */
-function SuccessState() {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.93 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-      className="flex flex-col items-center justify-center py-20 text-center px-6"
-    >
-      {/* Animated check icon */}
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ type: "spring", stiffness: 280, damping: 20, delay: 0.1 }}
-        className="w-20 h-20 rounded-full bg-emerald-50 border-2 border-emerald-200 flex items-center justify-center mb-6 shadow-sm"
-      >
-        <CheckCircle2 className="w-10 h-10 text-emerald-500" strokeWidth={2} />
-      </motion.div>
-
-      <motion.h2
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.25 }}
-        className="text-[22px] font-black text-slate-900 mb-2"
-      >
-        تم إرسال طلبك بنجاح! 🎉
-      </motion.h2>
-
-      <motion.p
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.35 }}
-        className="text-[14px] text-slate-500 leading-relaxed max-w-sm"
-      >
-        طلب توثيق كيانك قيد المراجعة من قِبَل فريق تنموي. سيتم إعلامك خلال 2-3 أيام عمل بعد التحقق من الترخيص.
-      </motion.p>
-
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.45 }}
-        className="mt-6 flex items-center gap-2 px-4 py-2.5 bg-primary/5 border border-primary/15 rounded-xl"
-      >
-        <ShieldCheck className="w-4 h-4 text-primary shrink-0" strokeWidth={2} />
-        <span className="text-[12.5px] font-semibold text-primary">
-          رقم الطلب: TAN-2026-00847
-        </span>
-      </motion.div>
-    </motion.div>
-  );
-}
-
-/* ── Main Page ────────────────────────────────────── */
 export default function CreateEntityPage() {
+  const router = useRouter();
+  const { setFounder } = useUserStore();
+  const [licenseNumber, setLicenseNumber] = useState("");
+  const [isFetching, setIsFetching] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [logoPreview, setLogoPreview] = useState(false);
+  const [fetchedData, setFetchedData] = useState<any>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (!licenseNumber.trim()) return;
+
+    setIsFetching(true);
+    setTimeout(() => {
+      setIsFetching(false);
+      setFetchedData({
+        name: "جمعية روافد للتمكين والتعليم الأهلية",
+        type: "جمعية أهلية",
+        licenseNum: licenseNumber,
+        authority: "المركز الوطني لتنمية القطاع غير الربحي",
+        establishDate: "1442/08/12 هـ",
+        status: "نشط ومعتمد",
+      });
+      setSubmitted(true);
+    }, 2000);
+  };
+
+  const handleConfirm = () => {
+    setFounder(true);
+    router.push("/entity");
   };
 
   return (
     <DashboardLayout>
-      <div className="max-w-3xl mx-auto py-8 px-4">
-
-        {/* ── Page Header ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35 }}
-          className="mb-8 text-center"
-        >
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/8 border border-primary/15 rounded-full mb-4">
+      <div className="max-w-xl mx-auto py-12 px-4 min-h-[80vh] flex flex-col justify-center">
+        
+        {/* Page Header */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full mb-4">
             <Building className="w-3.5 h-3.5 text-primary" strokeWidth={2.5} />
-            <span className="text-[12px] font-bold text-primary">طلب توثيق رسمي</span>
+            <span className="text-[12px] font-bold text-primary">توثيق الكيان الفوري</span>
           </div>
-          <h1 className="text-[24px] font-black text-slate-900 leading-tight mb-2">
-            تسجيل كيان تنموي جديد
+          <h1 className="text-[26px] font-black text-slate-900 dark:text-slate-100 leading-tight mb-2">
+            توثيق كيان تنموي جديد
           </h1>
-          <p className="text-[14px] text-slate-500 leading-relaxed max-w-md mx-auto">
-            انضم إلى شبكة الكيانات المعتمدة وابدأ في إدارة مبادراتك بذكاء
+          <p className="text-[14px] text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm mx-auto">
+            أدخل رقم الترخيص لجلب بيانات الكيان الخاص بك وتوثيقه تلقائياً من السجلات الرسمية
           </p>
-        </motion.div>
+        </div>
 
-        <AnimatePresence mode="wait">
-          {submitted ? (
-            <motion.div
-              key="success"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden"
-            >
-              <div className="h-1.5 w-full bg-tanmawy-gradient" />
-              <SuccessState />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="form"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.35 }}
-            >
-              <form onSubmit={handleSubmit}>
-                <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                  {/* Top gradient accent */}
-                  <div className="h-1.5 w-full bg-tanmawy-gradient" />
+        <div className="bg-surface border border-border rounded-3xl shadow-xl overflow-hidden relative">
+          <div className="h-1.5 w-full bg-tanmawy-gradient" />
 
-                  <div className="p-8 space-y-8">
-
-                    {/* ── A: Logo Upload ── */}
-                    <div className="flex flex-col items-center gap-3">
-                      <button
-                        type="button"
-                        onClick={() => setLogoPreview(!logoPreview)}
-                        className={`w-24 h-24 rounded-full border-2 border-dashed flex items-center justify-center cursor-pointer transition-all duration-200 ${
-                          logoPreview
-                            ? "border-primary bg-primary/5 shadow-md"
-                            : "border-slate-300 bg-slate-50 hover:border-primary hover:bg-primary/5"
-                        }`}
-                      >
-                        {logoPreview ? (
-                          <span className="text-3xl">🏛️</span>
-                        ) : (
-                          <UploadCloud
-                            className="w-8 h-8 text-slate-300"
-                            strokeWidth={1.5}
-                          />
-                        )}
-                      </button>
-                      <div className="text-center">
-                        <p className="text-[13px] font-semibold text-slate-600">رفع شعار الكيان</p>
-                        <p className="text-[11px] text-slate-400">PNG, JPG – حتى 2MB</p>
-                      </div>
-                    </div>
-
-                    {/* ── B: الأساسيات ── */}
-                    <div>
-                      <SectionTitle>الأساسيات</SectionTitle>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                        <Field label="اسم الكيان" id="entityName" icon={Building} required>
-                          <input
-                            id="entityName"
-                            type="text"
-                            placeholder="مثال: جمعية نقاء للتنمية"
-                            className={inputCls}
-                            required
-                          />
-                        </Field>
-
-                        <Field label="نوع الكيان" id="entityType" icon={Building} required>
-                          <div className="relative">
-                            <select
-                              id="entityType"
-                              className={`${inputCls} appearance-none pr-4 pl-9 cursor-pointer`}
-                              required
-                              defaultValue=""
-                            >
-                              <option value="" disabled>اختر نوع الكيان...</option>
-                              <option value="charity">جمعية خيرية</option>
-                              <option value="foundation">مؤسسة أهلية</option>
-                              <option value="volunteer">فريق تطوعي</option>
-                              <option value="initiative">مبادرة مجتمعية</option>
-                            </select>
-                            <ChevronDown className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
-                          </div>
-                        </Field>
-                      </div>
-                    </div>
-
-                    {/* ── C: التوثيق القانوني ── */}
-                    <div>
-                      <SectionTitle>التوثيق القانوني</SectionTitle>
-                      <div className="bg-slate-50 border border-slate-100 rounded-xl p-6 mt-4">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          <Field label="رقم الترخيص" id="licenseNumber" icon={FileText} required>
-                            <input
-                              id="licenseNumber"
-                              type="text"
-                              placeholder="SA-XXXXX"
-                              className={inputCls}
-                              required
-                            />
-                          </Field>
-
-                          <Field label="جهة الترخيص" id="licensingAuthority" icon={ShieldCheck} required>
-                            <input
-                              id="licensingAuthority"
-                              type="text"
-                              placeholder="وزارة الموارد البشرية"
-                              className={inputCls}
-                              required
-                            />
-                          </Field>
-                        </div>
-
-                        {/* Legal hint */}
-                        <div className="mt-4 flex items-start gap-2 p-3 rounded-lg bg-amber-50 border border-amber-100">
-                          <ShieldCheck className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" strokeWidth={2} />
-                          <p className="text-[11.5px] text-amber-700 leading-relaxed">
-                            سيتم التحقق من بيانات الترخيص عبر السجلات الرسمية. تأكد من صحة الرقم قبل الإرسال.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* ── D: التواصل والنبذة ── */}
-                    <div>
-                      <SectionTitle>التواصل والنبذة</SectionTitle>
-                      <div className="mt-4 space-y-5">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          <Field label="البريد الإلكتروني للكيان" id="entityEmail" icon={Mail} required>
-                            <input
-                              id="entityEmail"
-                              type="email"
-                              placeholder="info@entity.org.sa"
-                              className={inputCls}
-                              required
-                            />
-                          </Field>
-
-                          <Field label="رقم التواصل" id="entityPhone" icon={Phone}>
-                            <input
-                              id="entityPhone"
-                              type="tel"
-                              placeholder="05XXXXXXXX"
-                              className={inputCls}
-                            />
-                          </Field>
-                        </div>
-
-                        <Field label="نبذة عن الكيان" id="entityBio" icon={AlignLeft} required>
-                          <textarea
-                            id="entityBio"
-                            rows={3}
-                            placeholder="اكتب وصفاً موجزاً عن مهمة الكيان وأهدافه وقيمه..."
-                            className={`${inputCls} resize-none leading-relaxed`}
-                            required
-                          />
-                        </Field>
-                      </div>
-                    </div>
-
-                    {/* ── Action Area ── */}
-                    <div className="pt-2 border-t border-slate-100 space-y-4">
-                      <motion.button
-                        type="submit"
-                        className="w-full py-3.5 rounded-xl bg-tanmawy-gradient text-white text-[16px] font-bold shadow-md hover:shadow-xl transition-all hover:scale-[1.01] active:scale-[0.99]"
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        إرسال طلب التوثيق
-                      </motion.button>
-
-                      <div className="flex items-center justify-center gap-2 text-center">
-                        <ShieldCheck className="w-4 h-4 text-slate-400 shrink-0" strokeWidth={2} />
-                        <p className="text-[12px] text-slate-400 leading-relaxed">
-                          بمجرد التحقق من الترخيص، سيتم تفعيل لوحة إدارة الكيان الخاصة بك
-                        </p>
-                      </div>
-                    </div>
-
+          <AnimatePresence mode="wait">
+            {isFetching ? (
+              <motion.div
+                key="fetching"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="p-8 py-16 flex flex-col items-center justify-center text-center space-y-4"
+              >
+                <div className="relative flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-full border-4 border-primary/20 border-t-primary animate-spin" />
+                  <Building2 className="w-6 h-6 text-primary absolute animate-pulse" />
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200">
+                    جاري جلب بيانات الكيان...
+                  </h3>
+                  <p className="text-sm text-slate-500 dark:text-slate-450 max-w-xs">
+                    نقوم الآن بالاستعلام من قاعدة بيانات المركز الوطني لتنمية القطاع غير الربحي
+                  </p>
+                </div>
+              </motion.div>
+            ) : submitted && fetchedData ? (
+              <motion.div
+                key="success"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="p-6 md:p-8 space-y-6 text-right"
+              >
+                <div className="flex flex-col items-center text-center space-y-3">
+                  <div className="w-14 h-14 rounded-full bg-emerald-55/10 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900/30 flex items-center justify-center shadow-inner">
+                    <CheckCircle2 className="w-8 h-8 text-emerald-55" strokeWidth={2.5} />
+                  </div>
+                  <div>
+                    <h2 className="text-[20px] font-black text-slate-900 dark:text-slate-100">
+                      تم العثور على الكيان وتوثيقه!
+                    </h2>
+                    <p className="text-[13px] text-slate-500 dark:text-slate-450 mt-1">
+                      تم التحقق من صحة الترخيص بنجاح وجلب البيانات الرسمية
+                    </p>
                   </div>
                 </div>
-              </form>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
+                {/* Fetched Data Block */}
+                <div className="bg-slate-50 dark:bg-slate-900/40 border border-slate-200/60 dark:border-white/5 rounded-2xl p-5 space-y-4">
+                  <div className="flex justify-between items-start border-b border-slate-200/50 dark:border-white/5 pb-3">
+                    <span className="text-[12px] text-slate-450 dark:text-slate-500 font-semibold">اسم الكيان</span>
+                    <span className="text-[14px] font-black text-slate-800 dark:text-slate-200 text-left">{fetchedData.name}</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-slate-200/50 dark:border-white/5 pb-3">
+                    <span className="text-[12px] text-slate-450 dark:text-slate-500 font-semibold">نوع الكيان</span>
+                    <span className="text-[13px] font-bold text-slate-700 dark:text-slate-300">{fetchedData.type}</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-slate-200/50 dark:border-white/5 pb-3">
+                    <span className="text-[12px] text-slate-450 dark:text-slate-500 font-semibold">رقم الترخيص</span>
+                    <span className="text-[13.5px] font-bold text-primary tabular-nums">{fetchedData.licenseNum}</span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-slate-200/50 dark:border-white/5 pb-3">
+                    <span className="text-[12px] text-slate-450 dark:text-slate-500 font-semibold">الجهة المشرفة</span>
+                    <span className="text-[13px] font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                      <Landmark className="w-3.5 h-3.5 text-slate-400" />
+                      {fetchedData.authority}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center border-b border-slate-200/50 dark:border-white/5 pb-3">
+                    <span className="text-[12px] text-slate-450 dark:text-slate-500 font-semibold">تاريخ التأسيس</span>
+                    <span className="text-[13px] font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                      <Calendar className="w-3.5 h-3.5 text-slate-400" />
+                      {fetchedData.establishDate}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[12px] text-slate-450 dark:text-slate-500 font-semibold">حالة الترخيص</span>
+                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600 dark:text-emerald-450 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900/40 px-2.5 py-0.5 rounded-full">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-55" />
+                      {fetchedData.status}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="space-y-3 pt-2">
+                  <button
+                    onClick={handleConfirm}
+                    className="w-full py-3.5 rounded-xl bg-tanmawy-gradient text-white text-[15px] font-bold shadow-md hover:shadow-lg transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
+                  >
+                    تأكيد البيانات والدخول للوحة التحكم
+                  </button>
+                  <button
+                    onClick={() => {
+                      setSubmitted(false);
+                      setLicenseNumber("");
+                    }}
+                    className="w-full py-3 rounded-xl border border-slate-200 dark:border-white/10 text-[14px] font-semibold text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                  >
+                    البحث عن ترخيص آخر
+                  </button>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="form"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="p-6 md:p-8 text-right"
+              >
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* License Input */}
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="licenseNumber"
+                      className="block text-sm font-bold text-slate-700 dark:text-slate-350"
+                    >
+                      رقم الترخيص الرسمي
+                    </label>
+                    <div className="relative">
+                      <FileText
+                        className="absolute right-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 dark:text-slate-500 pointer-events-none"
+                        strokeWidth={1.8}
+                      />
+                      <input
+                        id="licenseNumber"
+                        type="text"
+                        required
+                        placeholder="مثال: SA-10293"
+                        value={licenseNumber}
+                        onChange={(e) => setLicenseNumber(e.target.value)}
+                        className="w-full pr-11 pl-4 py-3.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900/50 text-[15px] text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-650 outline-none transition-all focus:bg-white dark:focus:bg-slate-900 focus:border-teal-400 dark:focus:border-teal-500 focus:ring-2 focus:ring-teal-100 dark:focus:ring-teal-950/30"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Warning/Info Box */}
+                  <div className="flex items-start gap-2.5 p-3.5 rounded-xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-100 dark:border-amber-900/30">
+                    <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" strokeWidth={2} />
+                    <p className="text-[12px] text-amber-800 dark:text-amber-400 leading-relaxed font-semibold">
+                      يجب إدخال ترخيص ساري ومسجل لدى الجهات الرسمية لكي تتمكن من إطلاق مبادراتك الخيرية وقبول التبرعات.
+                    </p>
+                  </div>
+
+                  {/* Submit Button */}
+                  <div className="space-y-4 pt-2">
+                    <button
+                      type="submit"
+                      className="w-full py-3.5 rounded-xl bg-tanmawy-gradient text-white text-[15px] font-bold shadow-md hover:shadow-lg transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
+                    >
+                      توثيق الكيان وجلب البيانات
+                    </button>
+                    
+                    <button
+                      type="button"
+                      onClick={() => router.back()}
+                      className="w-full py-3 rounded-xl border border-slate-200 dark:border-white/10 text-[14px] font-semibold text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                    >
+                      <ArrowLeft className="w-4 h-4" />
+                      العودة للخلف
+                    </button>
+                  </div>
+                </form>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </DashboardLayout>
-  );
-}
-
-/* ── Section Title ────────────────────────────────── */
-function SectionTitle({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex items-center gap-3">
-      <span className="text-[13px] font-black text-slate-800">{children}</span>
-      <div className="flex-1 h-px bg-slate-100" />
-    </div>
   );
 }

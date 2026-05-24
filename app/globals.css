@@ -2,27 +2,50 @@
 @import 'tailwindcss';
 
 /* ─────────────────────────────────────────────
-   TANMAWY DESIGN SYSTEM — Light Premium Theme
+   TANMAWY DESIGN SYSTEM — Premium Theme
    Twitter / Threads Social Aesthetic
 ───────────────────────────────────────────── */
 :root {
-  /* ⚑ Force light mode — ignores OS/browser dark-mode setting */
+  /* ⚑ Light mode defaults */
   color-scheme: light;
 
   /* Surfaces */
-  --background:     #f8fafc;
-  --surface:        #ffffff;
-  --border:         #e2e8f0;
+  --background:     #f1f5f9;   /* slate-100 — clean cool-white canvas  */
+  --surface:        #ffffff;   /* pure white cards                      */
+  --border:         #e2e8f0;   /* slate-200                             */
 
   /* Text */
-  --foreground:     #0f172a;
-  --muted-fg:       #64748b;
+  --foreground:     #0f172a;   /* slate-900                             */
+  --muted-fg:       #64748b;   /* slate-500                             */
 
   /* Brand */
-  --primary:        #14b8a6;
-  --primary-light:  #5eead4;
-  --secondary:      #6366f1;
-  --primary-hover:  #0f766e;
+  --primary:        #0d9488;   /* teal-600 — richer on white            */
+  --primary-light:  #5eead4;   /* teal-300                              */
+  --secondary:      #4f46e5;   /* indigo-600 — richer on white          */
+  --primary-hover:  #0f766e;   /* teal-700                              */
+}
+
+/* ── Dark Mode ────────────────────────────────
+   Unified slate family — no hue clash.
+   background + surface are both slate-based
+   so they read as one coherent space.          */
+.dark {
+  color-scheme: dark;
+
+  /* Surfaces — same slate hue, two depths */
+  --background:     #0f172a;   /* slate-900 — main canvas               */
+  --surface:        #1e293b;   /* slate-800 — cards, sidebars, panels   */
+  --border:         rgba(148, 163, 184, 0.12); /* slate-400/12           */
+
+  /* Text */
+  --foreground:     #e2e8f0;   /* slate-200 — soft, not blinding        */
+  --muted-fg:       #64748b;   /* slate-500 — secondary labels          */
+
+  /* Brand — vivid on dark navy */
+  --primary:        #2dd4bf;   /* teal-400 — glows on slate-900         */
+  --primary-light:  #99f6e4;   /* teal-200                              */
+  --secondary:      #818cf8;   /* indigo-400                            */
+  --primary-hover:  #14b8a6;   /* teal-500                              */
 }
 
 @theme inline {
@@ -52,9 +75,8 @@
   --font-mono: var(--font-geist-mono);
 }
 
-/* ── Disable Tailwind dark variant globally ── */
-/* Tailwind v4: override the dark selector to   */
-/* never match, so dark:* utilities do nothing. */
+/* ── Dark variant: class-based (not OS preference) ── */
+/* dark:* utilities activate when .dark is on an ancestor */
 @variant dark (&:where(.dark, .dark *));
 
 /* ── Base ────────────────────────────────── */
@@ -64,6 +86,7 @@ body {
   font-family: 'Cairo', ui-sans-serif, sans-serif;
   letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* ── Scrollbar ────────────────────────────── */
@@ -71,6 +94,8 @@ body {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
 ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+.dark ::-webkit-scrollbar-thumb { background: #334155; }
+.dark ::-webkit-scrollbar-thumb:hover { background: #2dd4bf50; }
 
 /* ── Utilities ────────────────────────────── */
 .transition-smooth {
@@ -136,4 +161,3 @@ body {
 .fade-in-up {
   animation: fadeInUp 0.6s ease forwards;
 }
-

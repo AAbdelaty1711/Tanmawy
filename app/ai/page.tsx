@@ -52,9 +52,9 @@ function SuggestionCard({
       whileHover={{ scale: 1.02, y: -2 }}
       whileTap={{ scale: 0.97 }}
       onClick={onClick}
-      className="text-right w-full p-4 bg-white border border-slate-200 rounded-2xl hover:border-primary/40 hover:shadow-md transition-all duration-200 group"
+      className="text-right w-full p-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-white/5 rounded-2xl hover:border-primary/40 hover:shadow-md transition-all duration-200 group"
     >
-      <span className="text-[14px] text-slate-700 font-semibold leading-snug group-hover:text-primary transition-colors">
+      <span className="text-[14px] text-slate-700 dark:text-slate-200 font-semibold leading-snug group-hover:text-primary transition-colors">
         {text}
       </span>
     </motion.button>
@@ -87,8 +87,8 @@ function MessageBubble({ msg }: { msg: Message }) {
       <div
         className={`max-w-[75%] px-4 py-3 rounded-2xl text-[14px] leading-relaxed whitespace-pre-line ${
           isAI
-            ? "bg-white border border-slate-200 text-slate-800 rounded-tr-sm shadow-sm"
-            : "bg-primary/10 text-primary-hover rounded-tl-sm"
+            ? "bg-white dark:bg-slate-800 border border-slate-200 dark:border-white/5 text-slate-800 dark:text-slate-100 rounded-tr-sm shadow-sm"
+            : "bg-primary/10 text-primary rounded-tl-sm"
         }`}
       >
         {msg.content}
@@ -108,12 +108,12 @@ function LoadingDots() {
       <div className="shrink-0 w-8 h-8 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center shadow-sm ring-1 ring-border">
         <Sparkles className="w-4 h-4 text-secondary" strokeWidth={2} />
       </div>
-      <div className="bg-white border border-slate-200 rounded-2xl rounded-tr-sm px-4 py-3.5 shadow-sm">
+      <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-white/5 rounded-2xl rounded-tr-sm px-4 py-3.5 shadow-sm">
         <div className="flex items-center gap-1.5">
           {[0, 1, 2].map((i) => (
             <motion.span
               key={i}
-              className="w-2 h-2 rounded-full bg-slate-300"
+              className="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600"
               animate={{ opacity: [0.3, 1, 0.3], scale: [0.8, 1, 0.8] }}
               transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.2 }}
             />
@@ -215,15 +215,15 @@ export default function AIPage() {
                 <motion.div
                   animate={{ scale: [1, 1.08, 1], rotate: [0, 6, -6, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mb-5 shadow-lg ring-2 ring-white"
+                  className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mb-5 shadow-lg ring-2 ring-white dark:ring-slate-800"
                 >
                   <Sparkles className="w-8 h-8 text-secondary" strokeWidth={2} />
                 </motion.div>
 
-                <h1 className="text-[22px] font-black text-slate-900 mb-2">
+                <h1 className="text-[22px] font-black text-slate-900 dark:text-slate-100 mb-2">
                   مرحباً بك في تنموي AI
                 </h1>
-                <p className="text-[14px] text-slate-500 leading-relaxed max-w-sm mb-8">
+                <p className="text-[14px] text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm mb-8">
                   مساعدك الذكي لتعظيم الأثر المجتمعي وإدارة المبادرات بفعالية
                 </p>
 
@@ -231,7 +231,7 @@ export default function AIPage() {
                 <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-bold mb-6 ${
                   isFounder
                     ? "bg-primary/8 text-primary border border-primary/15"
-                    : "bg-slate-100 text-slate-600 border border-slate-200"
+                    : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-white/5"
                 }`}>
                   <Sparkles className="w-3 h-3" />
                   {isFounder ? "وضع إدارة الكيانات" : "وضع الداعم والمتطوع"}
@@ -264,7 +264,7 @@ export default function AIPage() {
         {/* ── Input area ── */}
         <div className="px-4 pb-5 pt-2 bg-background">
           <div className="max-w-2xl mx-auto">
-            <div className="bg-white/80 backdrop-blur-md border border-slate-200 rounded-2xl p-2 shadow-sm flex items-end gap-2">
+            <div className="bg-white/80 dark:bg-slate-900/85 backdrop-blur-md border border-slate-200 dark:border-white/10 rounded-2xl p-2 shadow-sm flex items-end gap-2">
               {/* Send button (left in RTL = left side, but we use flex-row so it appears left) */}
               <button
                 onClick={() => sendMessage(inputValue)}
@@ -287,11 +287,11 @@ export default function AIPage() {
                     : "اسألني عن أفضل المبادرات، أفكار التطوع، أو كيفية تقييم أثر تبرعاتك..."
                 }
                 rows={1}
-                className="flex-1 resize-none bg-transparent text-[14px] text-slate-800 placeholder:text-slate-400 outline-none leading-relaxed py-2 px-2 max-h-[120px] text-right"
+                className="flex-1 resize-none bg-transparent text-[14px] text-slate-800 dark:text-slate-100 placeholder:text-slate-400 outline-none leading-relaxed py-2 px-2 max-h-[120px] text-right"
                 style={{ overflow: "hidden" }}
               />
             </div>
-            <p className="text-center text-[11px] text-slate-400 mt-2">
+            <p className="text-center text-[11px] text-slate-400 dark:text-slate-500 mt-2">
               تنموي AI قد يُخطئ. تحقق من المعلومات المهمة دائماً.
             </p>
           </div>

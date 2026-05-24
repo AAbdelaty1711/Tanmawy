@@ -170,7 +170,7 @@ export default function AuthPanel({ children }: AuthPanelProps) {
 
         {/* Bottom-sheet white card */}
         <motion.div
-          className="flex-1 bg-white rounded-t-3xl overflow-hidden"
+          className="flex-1 bg-white dark:bg-slate-900 rounded-t-3xl overflow-hidden"
           style={{ boxShadow: "0 -8px 40px rgba(0,0,0,0.15)" }}
           initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -178,7 +178,7 @@ export default function AuthPanel({ children }: AuthPanelProps) {
         >
           {/* Pill handle */}
           <div className="flex justify-center pt-3 pb-1">
-            <div className="w-10 h-1 rounded-full bg-slate-200" />
+            <div className="w-10 h-1 rounded-full bg-slate-200 dark:bg-slate-800" />
           </div>
           <div className="px-6 py-6 overflow-y-auto">
             {children}
@@ -199,7 +199,7 @@ export default function AuthPanel({ children }: AuthPanelProps) {
           transition={{ duration: 0.55, delay: 0.1, ease: "easeOut" }}
         >
           <div
-            className="w-full bg-white rounded-3xl overflow-hidden"
+            className="w-full bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-transparent dark:border-white/5"
             style={{ boxShadow: "0 32px 80px rgba(0,0,0,0.24), 0 0 0 1px rgba(255,255,255,0.10)" }}
           >
             <div className="px-8 py-10 overflow-y-auto max-h-[88vh]">

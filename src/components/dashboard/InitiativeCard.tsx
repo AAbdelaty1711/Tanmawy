@@ -17,6 +17,7 @@ export interface InitiativeCardProps {
   collected: number;
   target: number;
   avatarGradient?: string;
+  onCardClick?: () => void;
 }
 
 /* ── Helpers ─────────────────────────────────────────── */
@@ -50,7 +51,7 @@ function PaymentModal({
     >
       {/* Modal Card */}
       <motion.div
-        className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden"
+        className="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl shadow-2xl overflow-hidden"
         initial={{ opacity: 0, y: 32, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 20, scale: 0.96 }}
@@ -64,7 +65,7 @@ function PaymentModal({
           {/* Close */}
           <button
             onClick={onClose}
-            className="absolute top-4 left-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 transition-colors"
+            className="absolute top-4 left-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-colors"
             aria-label="إغلاق"
           >
             <X className="w-4 h-4" />
@@ -75,37 +76,37 @@ function PaymentModal({
             <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-3 shadow-sm">
               <ShieldCheck className="w-7 h-7 text-primary" strokeWidth={2} />
             </div>
-            <h2 className="text-[18px] font-black text-slate-900 leading-tight">
+            <h2 className="text-[18px] font-black text-slate-900 dark:text-slate-100 leading-tight">
               توجيه إلى منصة الدفع الرسمية
             </h2>
-            <p className="text-[13px] text-slate-500 mt-1 leading-relaxed">
+            <p className="text-[13px] text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
               سيتم تحويلك لإتمام عملية الدعم عبر القنوات الرسمية المعتمدة
             </p>
           </div>
 
           {/* Info box */}
-          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-5 text-right space-y-2.5">
+          <div className="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-white/5 rounded-2xl p-4 mb-5 text-right space-y-2.5">
             <div className="flex items-start justify-between gap-2">
-              <span className="text-[12px] font-semibold text-slate-400 shrink-0">المبادرة</span>
-              <span className="text-[13px] font-bold text-slate-800 text-right leading-snug">{initiativeTitle}</span>
+              <span className="text-[12px] font-semibold text-slate-400 dark:text-slate-500 shrink-0">المبادرة</span>
+              <span className="text-[13px] font-bold text-slate-800 dark:text-slate-100 text-right leading-snug">{initiativeTitle}</span>
             </div>
             <div className="flex items-center justify-between gap-2">
-              <span className="text-[12px] font-semibold text-slate-400 shrink-0">الجهة</span>
-              <span className="text-[13px] font-semibold text-slate-700 flex items-center gap-1">
+              <span className="text-[12px] font-semibold text-slate-400 dark:text-slate-500 shrink-0">الجهة</span>
+              <span className="text-[13px] font-semibold text-slate-700 dark:text-slate-200 flex items-center gap-1">
                 {entityName}
                 <BadgeCheck className="w-3.5 h-3.5 text-primary shrink-0" />
               </span>
             </div>
             <div className="flex items-center justify-between gap-2">
-              <span className="text-[12px] font-semibold text-slate-400 shrink-0">عبر</span>
-              <span className="text-[13px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-100">
+              <span className="text-[12px] font-semibold text-slate-400 dark:text-slate-500 shrink-0">عبر</span>
+              <span className="text-[13px] font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2.5 py-0.5 rounded-full border border-emerald-100 dark:border-emerald-900/40">
                 نفاذ / البنك المركزي
               </span>
             </div>
           </div>
 
           {/* Legal note */}
-          <p className="text-[11px] text-slate-400 text-center mb-5 leading-relaxed px-2">
+          <p className="text-[11px] text-slate-400 dark:text-slate-500 text-center mb-5 leading-relaxed px-2">
             لا تُجري منصة تنموي أي معاملات مالية مباشرة. يتم تحويل الدعم عبر البوابات الرسمية مباشرةً إلى الحساب المعتمد للكيان.
           </p>
 
@@ -113,7 +114,7 @@ function PaymentModal({
           <div className="flex gap-3">
             <button
               onClick={onClose}
-              className="flex-1 py-2.5 rounded-xl border border-slate-200 text-[14px] font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
+              className="flex-1 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 text-[14px] font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
             >
               إلغاء
             </button>
@@ -136,13 +137,14 @@ function PaymentModal({
 export default function InitiativeCard({
   entityName,
   category,
-  categoryColor = "bg-teal-50 text-teal-700 border-teal-100",
+  categoryColor = "bg-teal-50 text-teal-700 border-teal-100 dark:bg-teal-950/40 dark:text-teal-400 dark:border-teal-900/40",
   timestamp,
   title,
   description,
   collected,
   target,
   avatarGradient = "from-primary/20 to-secondary/20",
+  onCardClick,
 }: InitiativeCardProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const pct = Math.min(Math.round((collected / target) * 100), 100);
@@ -150,7 +152,10 @@ export default function InitiativeCard({
 
   return (
     <>
-      <article className="bg-surface border border-border rounded-2xl overflow-hidden hover:shadow-md transition-all duration-200 group">
+      <article 
+        onClick={onCardClick}
+        className={`bg-surface border border-border rounded-2xl overflow-hidden hover:shadow-md transition-all duration-200 group ${onCardClick ? "cursor-pointer" : ""}`}
+      >
 
         {/* ── Header ── */}
         <div className="flex items-start justify-between gap-3 px-5 pt-4 pb-3">
@@ -170,7 +175,7 @@ export default function InitiativeCard({
                 <span className={`inline-flex text-[10px] font-bold px-2 py-0.5 rounded-full border ${categoryColor}`}>
                   {category}
                 </span>
-                <span className="flex items-center gap-1 text-[11px] text-emerald-600 font-semibold">
+                <span className="flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold">
                   <span className="relative flex h-1.5 w-1.5 shrink-0">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                     <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
@@ -184,10 +189,10 @@ export default function InitiativeCard({
 
         {/* ── Body ── */}
         <div className="px-5 pb-4">
-          <h3 className="text-[16px] font-black text-slate-900 leading-snug mb-2">
+          <h3 className="text-[16px] font-black text-slate-900 dark:text-slate-100 leading-snug mb-2">
             {title}
           </h3>
-          <p className="text-[13.5px] text-slate-500 leading-relaxed">
+          <p className="text-[13.5px] text-slate-500 dark:text-slate-400 leading-relaxed">
             {description}
           </p>
         </div>
@@ -195,7 +200,7 @@ export default function InitiativeCard({
         {/* ── Progress ── */}
         <div className="px-5 pb-4">
           {/* Bar */}
-          <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden mb-2.5">
+          <div className="w-full h-2 bg-slate-100 dark:bg-slate-700/80 rounded-full overflow-hidden mb-2.5">
             <motion.div
               className="h-full bg-primary rounded-full"
               initial={{ width: 0 }}
@@ -207,7 +212,7 @@ export default function InitiativeCard({
           {/* Stats row */}
           <div className="flex items-center justify-between gap-2">
             <div className="text-right">
-              <span className="text-[11px] text-slate-400 font-medium">تم جمع</span>
+              <span className="text-[11px] text-slate-400 dark:text-slate-500 font-medium">تم جمع</span>
               <p className="text-[13px] font-black text-primary leading-tight">
                 {formatNumber(collected)} ر.س
               </p>
@@ -216,17 +221,17 @@ export default function InitiativeCard({
             {/* Remaining badge */}
             <span className={`text-[11px] font-bold px-2.5 py-1 rounded-full shrink-0 ${
               remaining <= 10
-                ? "bg-emerald-50 text-emerald-700 border border-emerald-100"
+                ? "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/40"
                 : remaining <= 30
-                  ? "bg-amber-50 text-amber-700 border border-amber-100"
-                  : "bg-slate-100 text-slate-600"
+                  ? "bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border border-amber-100 dark:border-amber-900/40"
+                  : "bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-400"
             }`}>
               متبقي {remaining}%
             </span>
 
             <div className="text-left">
-              <span className="text-[11px] text-slate-400 font-medium">المستهدف</span>
-              <p className="text-[13px] font-bold text-slate-600 leading-tight">
+              <span className="text-[11px] text-slate-400 dark:text-slate-500 font-medium">المستهدف</span>
+              <p className="text-[13px] font-bold text-slate-600 dark:text-slate-300 leading-tight">
                 {formatNumber(target)} ر.س
               </p>
             </div>
@@ -234,10 +239,13 @@ export default function InitiativeCard({
         </div>
 
         {/* ── Footer ── */}
-        <div className="px-5 pb-5">
+        <div className="px-5 pb-5 flex justify-end">
           <button
-            onClick={() => setModalOpen(true)}
-            className="w-full py-2.5 rounded-xl bg-tanmawy-gradient text-white text-[14px] font-bold shadow-sm hover:shadow-lg transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]"
+            onClick={(e) => {
+              e.stopPropagation();
+              setModalOpen(true);
+            }}
+            className="w-full sm:w-auto sm:px-10 py-2.5 rounded-xl bg-tanmawy-gradient text-white text-[14px] font-bold shadow-sm hover:shadow-lg transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]"
           >
             دعم المبادرة
           </button>

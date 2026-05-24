@@ -119,7 +119,7 @@ const CATEGORY_DETAILS: Record<string, { label: string; iconName: string; iconBg
 };
 
 const inputCls =
-  "w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-[14px] text-slate-800 placeholder:text-slate-400 outline-none transition-all focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/10 text-right";
+  "w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900/50 text-[14px] text-slate-800 dark:text-slate-100 placeholder:text-slate-400 outline-none transition-all focus:bg-white dark:focus:bg-slate-900 focus:border-primary focus:ring-2 focus:ring-primary/10 text-right";
 
 function fadeUpProps(i: number) {
   return {
@@ -139,13 +139,13 @@ function AccessDenied({ onOpenRegister }: { onOpenRegister: () => void }) {
         transition={{ duration: 0.4 }}
         className="max-w-sm w-full"
       >
-        <div className="w-20 h-20 rounded-3xl bg-slate-100 flex items-center justify-center mx-auto mb-6 shadow-sm">
-          <ShieldCheck className="w-10 h-10 text-slate-400" strokeWidth={1.5} />
+        <div className="w-20 h-20 rounded-3xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mx-auto mb-6 shadow-sm">
+          <ShieldCheck className="w-10 h-10 text-slate-400 dark:text-slate-500" strokeWidth={1.5} />
         </div>
-        <h2 className="text-[20px] font-black text-slate-800 mb-2">
+        <h2 className="text-[20px] font-black text-slate-800 dark:text-slate-100 mb-2">
           منطقة الكيانات المعتمدة
         </h2>
-        <p className="text-[14px] text-slate-500 leading-relaxed mb-6">
+        <p className="text-[14px] text-slate-500 dark:text-slate-400 leading-relaxed mb-6">
           هذه المساحة مخصصة للكيانات المعتمدة للوصول إلى الخدمات المجانية المقدمة من شبكة الممكّنين.
         </p>
         <a
@@ -156,7 +156,7 @@ function AccessDenied({ onOpenRegister }: { onOpenRegister: () => void }) {
         </a>
         <button
           onClick={onOpenRegister}
-          className="w-full py-3.5 rounded-2xl border border-slate-200 text-slate-600 bg-white hover:bg-slate-50 text-[14px] font-bold transition-all shadow-sm active:scale-[0.99] cursor-pointer"
+          className="w-full py-3.5 rounded-2xl border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/50 text-[14px] font-bold transition-all shadow-sm active:scale-[0.99] cursor-pointer"
         >
           هل أنت مزود خدمة؟ سجل شركتك كممكّن
         </button>
@@ -171,11 +171,11 @@ function ProviderCard({ provider, index }: { provider: Provider; index: number }
   return (
     <motion.div
       {...fadeUpProps(index)}
-      className="group bg-white border border-slate-200 rounded-2xl p-6 hover:shadow-lg hover:border-primary/40 transition-all duration-200 flex flex-col"
+      className="group bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-white/5 rounded-2xl p-6 hover:shadow-lg hover:border-primary/40 transition-all duration-200 flex flex-col"
     >
       {/* Top row: Logo + Free badge */}
       <div className="flex items-start justify-between mb-4">
-        <div className={`w-12 h-12 rounded-2xl ${provider.iconBg} flex items-center justify-center shrink-0`}>
+        <div className={`w-12 h-12 rounded-2xl ${provider.iconBg} dark:bg-slate-900/80 flex items-center justify-center shrink-0`}>
           <Icon className={`w-6 h-6 ${provider.iconColor}`} strokeWidth={2} />
         </div>
         <span className="text-[10px] font-black px-2.5 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
@@ -186,15 +186,15 @@ function ProviderCard({ provider, index }: { provider: Provider; index: number }
       {/* Middle: Info */}
       <div className="flex-1 mb-4">
         <div className="mb-0.5 flex items-center justify-between gap-2">
-          <h3 className="text-[15px] font-black text-slate-900 group-hover:text-primary transition-colors leading-tight">
+          <h3 className="text-[15px] font-black text-slate-900 dark:text-slate-100 group-hover:text-primary transition-colors leading-tight">
             {provider.name}
           </h3>
         </div>
-        <span className="inline-block text-[11px] font-bold text-slate-400 mb-2">
+        <span className="inline-block text-[11px] font-bold text-slate-400 dark:text-slate-500 mb-2">
           {provider.category}
         </span>
 
-        <p className="text-[13px] text-slate-500 leading-relaxed mt-3 mb-3">
+        <p className="text-[13px] text-slate-500 dark:text-slate-400 leading-relaxed mt-3 mb-3">
           {provider.description}
         </p>
 
@@ -204,7 +204,7 @@ function ProviderCard({ provider, index }: { provider: Provider; index: number }
             <HandHeart className="w-4 h-4 text-primary shrink-0 mt-0.5" strokeWidth={2} />
             <div>
               <p className="text-[10.5px] font-black text-primary mb-0.5">ماذا يقدمون؟</p>
-              <p className="text-[12.5px] text-slate-700 leading-relaxed">
+              <p className="text-[12.5px] text-slate-700 dark:text-slate-300 leading-relaxed">
                 {provider.offer}
               </p>
             </div>
@@ -213,9 +213,9 @@ function ProviderCard({ provider, index }: { provider: Provider; index: number }
       </div>
 
       {/* Bottom: divider + action */}
-      <div className="border-t border-slate-100 pt-4">
+      <div className="border-t border-slate-100 dark:border-white/5 pt-4">
         <div className="flex items-center justify-between gap-2">
-          <span className="text-[11px] font-semibold text-teal-600 truncate">
+          <span className="text-[11px] font-semibold text-teal-600 dark:text-teal-400 truncate">
             {provider.id > 10 ? "✓ تسجيل ذاتي" : ""}
           </span>
           <button className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-primary/10 text-primary text-[13px] font-bold hover:bg-primary/20 transition-colors group-hover:shadow-sm cursor-pointer">
@@ -324,7 +324,7 @@ export default function EnablersPage() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", duration: 0.4 }}
-            className="w-full max-w-lg bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100 text-right relative z-[1000]"
+            className="w-full max-w-lg bg-white dark:bg-slate-900 rounded-3xl shadow-xl overflow-hidden border border-slate-100 dark:border-white/5 text-right relative z-[1000]"
             onClick={(e) => e.stopPropagation()}
             dir="rtl"
           >
@@ -335,7 +335,7 @@ export default function EnablersPage() {
               {/* Close button */}
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="absolute top-4 left-4 p-1.5 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
+                className="absolute top-4 left-4 p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -354,19 +354,19 @@ export default function EnablersPage() {
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ type: "spring", stiffness: 280, delay: 0.1 }}
-                        className="w-16 h-16 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center mb-4"
+                        className="w-16 h-16 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900/40 flex items-center justify-center mb-4"
                       >
                         <CheckCircle2 className="w-8 h-8 text-emerald-500" strokeWidth={2} />
                       </motion.div>
-                      <h3 className="text-[18px] font-black text-slate-900 mb-2">
+                      <h3 className="text-[18px] font-black text-slate-900 dark:text-slate-100 mb-2">
                         تم تسجيل شركتك بنجاح! 🎉
                       </h3>
-                      <p className="text-[13px] text-slate-500 leading-relaxed max-w-xs mb-6">
+                      <p className="text-[13px] text-slate-500 dark:text-slate-400 leading-relaxed max-w-xs mb-6">
                         شكراً لمساهمتك في دعم القطاع غير الربحي. ستظهر شركتك الآن في قائمة الممكّنين لجميع الكيانات المعتمدة.
                       </p>
                       <button
                         onClick={() => setIsModalOpen(false)}
-                        className="px-6 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-[14px] font-bold transition-colors cursor-pointer"
+                        className="px-6 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-[14px] font-bold transition-colors cursor-pointer"
                       >
                         إغلاق النافذة
                       </button>
@@ -379,10 +379,10 @@ export default function EnablersPage() {
                       exit={{ opacity: 0 }}
                     >
                       <div className="mb-6">
-                        <h3 className="text-[18px] font-black text-slate-900 mb-1">
+                        <h3 className="text-[18px] font-black text-slate-900 dark:text-slate-100 mb-1">
                           تسجيل شركة أو جهة كممكّن
                         </h3>
-                        <p className="text-[13px] text-slate-500 font-medium">
+                        <p className="text-[13px] text-slate-500 dark:text-slate-400 font-medium">
                           شارك بخدماتك مجاناً لدعم تمكين الكيانات التنموية.
                         </p>
                       </div>
@@ -390,8 +390,8 @@ export default function EnablersPage() {
                       <form onSubmit={handleSubmit} className="space-y-4">
                         {/* Name */}
                         <div className="space-y-1.5 text-right">
-                          <label className="flex items-center gap-1.5 text-[13px] font-bold text-slate-700">
-                            <Building className="w-3.5 h-3.5 text-slate-400" />
+                          <label className="flex items-center gap-1.5 text-[13px] font-bold text-slate-700 dark:text-slate-300">
+                            <Building className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
                             اسم الجهة / الشركة
                             <span className="text-rose-400">*</span>
                           </label>
@@ -407,8 +407,8 @@ export default function EnablersPage() {
 
                         {/* Category */}
                         <div className="space-y-1.5 text-right">
-                          <label className="flex items-center gap-1.5 text-[13px] font-bold text-slate-700">
-                            <ShieldCheck className="w-3.5 h-3.5 text-slate-400" />
+                          <label className="flex items-center gap-1.5 text-[13px] font-bold text-slate-700 dark:text-slate-300">
+                            <ShieldCheck className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
                             مجال الخدمة / الفئة
                             <span className="text-rose-400">*</span>
                           </label>
@@ -423,14 +423,14 @@ export default function EnablersPage() {
                               <option value="marketing">تسويق وتصميم</option>
                               <option value="legal">استشارات قانونية</option>
                             </select>
-                            <ChevronDown className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                            <ChevronDown className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-500 pointer-events-none" />
                           </div>
                         </div>
 
                         {/* Description */}
                         <div className="space-y-1.5 text-right">
-                          <label className="flex items-center gap-1.5 text-[13px] font-bold text-slate-700">
-                            <FileText className="w-3.5 h-3.5 text-slate-400" />
+                          <label className="flex items-center gap-1.5 text-[13px] font-bold text-slate-700 dark:text-slate-300">
+                            <FileText className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
                             نبذة عن الجهة
                             <span className="text-rose-400">*</span>
                           </label>
@@ -446,8 +446,8 @@ export default function EnablersPage() {
 
                         {/* Offer */}
                         <div className="space-y-1.5 text-right">
-                          <label className="flex items-center gap-1.5 text-[13px] font-bold text-slate-700">
-                            <HandHeart className="w-3.5 h-3.5 text-slate-400" />
+                          <label className="flex items-center gap-1.5 text-[13px] font-bold text-slate-700 dark:text-slate-300">
+                            <HandHeart className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
                             تفاصيل المساهمة المجانية
                             <span className="text-rose-400">*</span>
                           </label>
@@ -463,8 +463,8 @@ export default function EnablersPage() {
 
                         {/* Contact */}
                         <div className="space-y-1.5 text-right">
-                          <label className="flex items-center gap-1.5 text-[13px] font-bold text-slate-700">
-                            <Mail className="w-3.5 h-3.5 text-slate-400" />
+                          <label className="flex items-center gap-1.5 text-[13px] font-bold text-slate-700 dark:text-slate-300">
+                            <Mail className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
                             طريقة التواصل (البريد الإلكتروني)
                             <span className="text-rose-400">*</span>
                           </label>
@@ -509,10 +509,10 @@ export default function EnablersPage() {
           {/* ── Header ── */}
           <motion.div {...fadeUpProps(0)} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h1 className="text-[20px] font-black text-slate-900 leading-tight mb-1">
+              <h1 className="text-[20px] font-black text-slate-900 dark:text-slate-100 leading-tight mb-1">
                 ممكّنو منصة تنموي
               </h1>
-              <p className="text-[13.5px] text-slate-500 leading-relaxed max-w-xl">
+              <p className="text-[13.5px] text-slate-500 dark:text-slate-400 leading-relaxed max-w-xl">
                 شركات ومحترفون يتبرعون بجهدهم ووقتهم لتقديم خدمات مجانية لدعم وتطوير الكيانات التنموية المعتمدة.
               </p>
             </div>
@@ -528,14 +528,14 @@ export default function EnablersPage() {
           {/* ── Info Banner ── */}
           <motion.div
             {...fadeUpProps(1)}
-            className="flex items-start gap-3 p-4 rounded-2xl bg-emerald-50/70 border border-emerald-100"
+            className="flex items-start gap-3 p-4 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/25 border border-emerald-100 dark:border-emerald-900/30"
           >
-            <HandHeart className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" strokeWidth={2} />
+            <HandHeart className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" strokeWidth={2} />
             <div>
-              <p className="text-[13px] font-bold text-emerald-900">
+              <p className="text-[13px] font-bold text-emerald-900 dark:text-emerald-450">
                 جميع الخدمات المعروضة هنا مجانية 100% للكيانات المعتمدة
               </p>
-              <p className="text-[12px] text-emerald-700 leading-relaxed mt-0.5">
+              <p className="text-[12px] text-emerald-700 dark:text-emerald-500 leading-relaxed mt-0.5">
                 الممكّنون يقدمون مساهماتهم طوعاً كجزء من التزامهم بالمسؤولية الاجتماعية دون أي مقابل مادي.
               </p>
             </div>
@@ -550,7 +550,7 @@ export default function EnablersPage() {
                 className={`px-4 py-1.5 rounded-full text-[13px] font-bold transition-all duration-150 cursor-pointer ${
                   activeCategory === cat.id
                     ? "bg-primary text-white shadow-sm"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                    : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-350 hover:bg-slate-200 dark:hover:bg-slate-700"
                 }`}
               >
                 {cat.label}
@@ -567,10 +567,10 @@ export default function EnablersPage() {
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center py-16 text-center">
-              <div className="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center mb-4">
-                <HandHeart className="w-7 h-7 text-slate-300" strokeWidth={1.5} />
+              <div className="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-4">
+                <HandHeart className="w-7 h-7 text-slate-300 dark:text-slate-600" strokeWidth={1.5} />
               </div>
-              <p className="text-[14px] font-semibold text-slate-400">
+              <p className="text-[14px] font-semibold text-slate-400 dark:text-slate-500">
                 لا يوجد ممكّنون في هذه الفئة حالياً
               </p>
             </div>

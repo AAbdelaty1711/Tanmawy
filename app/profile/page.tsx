@@ -94,14 +94,14 @@ function MiniPost({ post, isFounder }: {
 }) {
   const [liked, setLiked] = useState(false);
   return (
-    <div className="bg-white border border-slate-100 rounded-2xl p-5">
+    <div className="bg-white dark:bg-slate-800/40 border border-slate-100 dark:border-white/5 rounded-2xl p-5">
       {isFounder && (
         <span className="inline-block text-[10px] font-bold bg-primary/10 text-primary border border-primary/20 px-2.5 py-0.5 rounded-full mb-3">
           تحديث رسمي
         </span>
       )}
-      <p className="text-[14px] text-slate-800 leading-[1.7] whitespace-pre-line mb-4">{post.content}</p>
-      <div className="flex items-center justify-between border-t border-slate-100 pt-3">
+      <p className="text-[14px] text-slate-800 dark:text-slate-200 leading-[1.7] whitespace-pre-line mb-4">{post.content}</p>
+      <div className="flex items-center justify-between border-t border-slate-100 dark:border-white/5 pt-3">
         <span className="text-[12px] text-slate-400">{post.time}</span>
         <div className="flex items-center gap-4">
           <button
@@ -127,17 +127,17 @@ function MiniPost({ post, isFounder }: {
 /* ── Supported Initiative Card ───────────────────────── */
 function SupportedCard({ item }: { item: typeof USER_SUPPORTED[0] }) {
   return (
-    <div className="bg-white border border-slate-100 rounded-2xl p-4 flex items-center gap-4">
+    <div className="bg-white dark:bg-slate-800/40 border border-slate-100 dark:border-white/5 rounded-2xl p-4 flex items-center gap-4">
       <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
         <CheckCircle2 className="w-5 h-5 text-primary" strokeWidth={2} />
       </div>
       <div className="flex-1 min-w-0 text-right">
-        <p className="text-[14px] font-bold text-slate-900 leading-snug truncate">{item.title}</p>
+        <p className="text-[14px] font-bold text-slate-900 dark:text-slate-100 leading-snug truncate">{item.title}</p>
         <p className="text-[12px] text-slate-400 mt-0.5">{item.entity}</p>
       </div>
       <div className="shrink-0 text-right">
         <span className="block text-[13px] font-black text-primary">{item.amount}</span>
-        <span className="inline-block mt-0.5 text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-100 px-2 py-0.5 rounded-full">
+        <span className="inline-block mt-0.5 text-[10px] font-bold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/40 px-2 py-0.5 rounded-full">
           تم الدعم ✓
         </span>
       </div>
@@ -160,25 +160,25 @@ function AboutSection({ isFounder }: { isFounder: boolean }) {
   const info = isFounder ? founderInfo : userInfo;
 
   return (
-    <div className="bg-white border border-slate-100 rounded-2xl p-6 space-y-5">
+    <div className="bg-white dark:bg-slate-800/40 border border-slate-100 dark:border-white/5 rounded-2xl p-6 space-y-5">
       <div>
-        <h3 className="text-[14px] font-black text-slate-900 mb-2">النبذة التعريفية</h3>
-        <p className="text-[14px] text-slate-500 leading-relaxed">
+        <h3 className="text-[14px] font-black text-slate-900 dark:text-slate-100 mb-2">النبذة التعريفية</h3>
+        <p className="text-[14px] text-slate-500 dark:text-slate-400 leading-relaxed">
           {isFounder
             ? "جمعية نقاء التنموية كيان خيري مرخص من وزارة الموارد البشرية، تأسست عام 2021 بهدف تمكين الأسر المحتاجة وتعزيز التنمية المستدامة في المناطق النائية. نعمل في مجالات المياه، التعليم، والإسكان الاجتماعي."
             : "مهتم بالعمل التطوعي والتنمية البيئية. أسعى لترك أثر إيجابي في مجتمعي من خلال دعم المبادرات التنموية والمشاركة الفاعلة في برامج التطوع المحلية."
           }
         </p>
       </div>
-      <div className="border-t border-slate-100 pt-5 space-y-3.5">
+      <div className="border-t border-slate-100 dark:border-white/5 pt-5 space-y-3.5">
         {info.map(({ icon: Icon, label, value }) => (
           <div key={label} className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
-              <Icon className="w-4 h-4 text-slate-500" strokeWidth={2} />
+            <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-900/50 flex items-center justify-center shrink-0">
+              <Icon className="w-4 h-4 text-slate-500 dark:text-slate-400" strokeWidth={2} />
             </div>
             <div className="text-right">
-              <p className="text-[11px] text-slate-400 font-semibold">{label}</p>
-              <p className="text-[13px] text-slate-800 font-semibold">{value}</p>
+              <p className="text-[11px] text-slate-400 dark:text-slate-500 font-semibold">{label}</p>
+              <p className="text-[13px] text-slate-800 dark:text-slate-200 font-semibold">{value}</p>
             </div>
           </div>
         ))}
@@ -236,7 +236,7 @@ export default function ProfilePage() {
         <div className="flex items-end justify-between -mt-16 md:-mt-20 mb-4">
           {/* Avatar */}
           <div className="relative">
-            <div className={`w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white shadow-lg ${
+            <div className={`w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white dark:border-slate-900 shadow-lg ${
               isFounder ? "bg-gradient-to-br from-teal-200 to-primary" : "bg-gradient-to-br from-indigo-200 to-secondary"
             } flex items-center justify-center`}>
               <span className="text-3xl md:text-4xl font-black text-white select-none">
@@ -244,14 +244,14 @@ export default function ProfilePage() {
               </span>
             </div>
             {isFounder && (
-              <div className="absolute -bottom-1 -left-1 w-7 h-7 rounded-full bg-white flex items-center justify-center shadow-sm">
+              <div className="absolute -bottom-1 -left-1 w-7 h-7 rounded-full bg-white dark:bg-slate-900 flex items-center justify-center shadow-sm">
                 <BadgeCheck className="w-5 h-5 text-primary" strokeWidth={2.5} />
               </div>
             )}
           </div>
 
           {/* Edit Profile button */}
-          <button className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-slate-200 text-[13px] font-bold text-slate-700 bg-white hover:bg-slate-50 transition-colors shadow-sm mb-2">
+          <button className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-slate-200 dark:border-white/10 text-[13px] font-bold text-slate-700 dark:text-slate-350 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors shadow-sm mb-2">
             <Pencil className="w-3.5 h-3.5" strokeWidth={2} />
             تعديل الملف
           </button>
@@ -261,28 +261,28 @@ export default function ProfilePage() {
         <motion.div {...fadeUpProps(0)}>
           {/* Name */}
           <div className="flex items-center gap-2 mb-1">
-            <h1 className="text-[20px] font-black text-slate-900">
+            <h1 className="text-[20px] font-black text-slate-900 dark:text-slate-100">
               {isFounder ? "جمعية نقاء التنموية" : "عبدالله محمد"}
             </h1>
             {isFounder && <BadgeCheck className="w-5 h-5 text-primary shrink-0" strokeWidth={2.5} />}
           </div>
 
           {/* Bio */}
-          <p className="text-[14px] text-slate-500 leading-relaxed mb-2">
+          <p className="text-[14px] text-slate-500 dark:text-slate-400 leading-relaxed mb-2">
             {isFounder
               ? "جمعية مرخصة تسعى لتمكين الأسر المحتاجة وتعزيز التنمية المستدامة."
               : "مهتم بالعمل التطوعي والتنمية البيئية. أسعى لترك أثر إيجابي."}
           </p>
 
           {/* Metadata */}
-          <p className="text-[12px] text-slate-400 font-medium mb-5">
+          <p className="text-[12px] text-slate-400 dark:text-slate-500 font-medium mb-5">
             {isFounder ? "رقم الترخيص: 10293 • تأسست 2021" : "انضم في مارس 2026"}
           </p>
 
           {/* Stats Grid */}
           <div className="grid grid-cols-3 gap-3 mb-5">
             {stats.map(({ label, value }) => (
-              <div key={label} className="bg-slate-50 border border-slate-100 rounded-2xl px-3 py-3.5 text-center">
+              <div key={label} className="bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-white/5 rounded-2xl px-3 py-3.5 text-center">
                 <p className={`text-[20px] font-black leading-tight mb-0.5 ${isFounder ? "text-primary" : "text-secondary"}`}>
                   {value}
                 </p>
@@ -293,7 +293,7 @@ export default function ProfilePage() {
         </motion.div>
 
         {/* ── Tabs ── */}
-        <div className="flex border-b border-slate-200 mb-5">
+        <div className="flex border-b border-slate-200 dark:border-white/5 mb-5">
           {TABS.map((tab) => (
             <button
               key={tab.id}
@@ -301,7 +301,7 @@ export default function ProfilePage() {
               className={`relative flex-1 py-3 text-[14px] font-bold transition-colors ${
                 activeTab === tab.id
                   ? "text-primary"
-                  : "text-slate-400 hover:text-slate-700"
+                  : "text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-200"
               }`}
             >
               {tab.label}

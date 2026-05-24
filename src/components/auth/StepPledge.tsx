@@ -36,18 +36,18 @@ export default function StepPledge({ onBack }: { onBack: () => void }) {
       <div>
         <div className="flex items-center gap-2 mb-1">
           <ShieldCheck className="w-5 h-5 text-teal-500" strokeWidth={2} />
-          <h2 className="text-xl font-black text-slate-900">حائط التعهد</h2>
+          <h2 className="text-xl font-black text-slate-900 dark:text-slate-100">حائط التعهد</h2>
         </div>
-        <p className="text-[13px] text-slate-500">
+        <p className="text-[13px] text-slate-500 dark:text-slate-400">
           هذا الميثاق هو أساس ثقتنا المشتركة في مجتمع تنموي
         </p>
       </div>
 
       {/* Pledge Card */}
-      <div className="relative rounded-2xl border border-indigo-100 bg-gradient-to-br from-indigo-50/60 to-teal-50/40 p-5 overflow-hidden">
+      <div className="relative rounded-2xl border border-indigo-100 dark:border-indigo-900/30 bg-gradient-to-br from-indigo-50/60 to-teal-50/40 dark:from-indigo-950/20 dark:to-teal-950/20 p-5 overflow-hidden">
         {/* Decorative corner */}
-        <div className="absolute top-0 left-0 w-16 h-16 bg-indigo-100/50 rounded-br-[40px]" />
-        <p className="relative z-10 text-[14px] text-slate-700 leading-[1.9] font-medium text-right">
+        <div className="absolute top-0 left-0 w-16 h-16 bg-indigo-100/50 dark:bg-indigo-900/20 rounded-br-[40px]" />
+        <p className="relative z-10 text-[14px] text-slate-700 dark:text-slate-200 leading-[1.9] font-medium text-right">
           {PLEDGE_TEXT}
         </p>
       </div>
@@ -61,8 +61,8 @@ export default function StepPledge({ onBack }: { onBack: () => void }) {
             className={`
               flex items-start gap-3 p-3.5 rounded-xl border cursor-pointer transition-all duration-200
               ${checked[id]
-                ? "border-teal-300 bg-teal-50/60"
-                : "border-slate-200 bg-white hover:border-slate-300"
+                ? "border-teal-300 dark:border-teal-800/60 bg-teal-50/60 dark:bg-teal-950/20"
+                : "border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/50 hover:border-slate-300 dark:hover:border-white/20"
               }
             `}
           >
@@ -80,7 +80,7 @@ export default function StepPledge({ onBack }: { onBack: () => void }) {
                   w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all duration-200
                   ${checked[id]
                     ? "bg-teal-500 border-teal-500"
-                    : "border-slate-300 bg-white"
+                    : "border-slate-300 dark:border-white/20 bg-white dark:bg-slate-900"
                   }
                 `}
               >
@@ -91,7 +91,7 @@ export default function StepPledge({ onBack }: { onBack: () => void }) {
                 )}
               </motion.div>
             </div>
-            <span className={`text-[13.5px] font-medium leading-relaxed ${checked[id] ? "text-teal-800" : "text-slate-700"}`}>
+            <span className={`text-[13.5px] font-medium leading-relaxed ${checked[id] ? "text-teal-800 dark:text-teal-400" : "text-slate-700 dark:text-slate-300"}`}>
               {label}
             </span>
           </label>
@@ -103,7 +103,7 @@ export default function StepPledge({ onBack }: { onBack: () => void }) {
         <button
           type="button"
           onClick={onBack}
-          className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-200 text-[14px] font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
+          className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 text-[14px] font-semibold text-slate-600 dark:text-slate-350 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
         >
           <ChevronRight className="w-4 h-4" strokeWidth={2} />
           السابق
@@ -117,7 +117,7 @@ export default function StepPledge({ onBack }: { onBack: () => void }) {
             flex-1 py-2.5 rounded-xl text-[15px] font-bold text-white transition-all duration-300
             ${allChecked
               ? "bg-tanmawy-gradient shadow-md hover:shadow-lg hover:scale-[1.01]"
-              : "bg-slate-200 text-slate-400 cursor-not-allowed"
+              : "bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-550 cursor-not-allowed"
             }
           `}
         >

@@ -125,7 +125,7 @@ export default function PostCard({
   return (
     <article
       className="flex gap-3 px-4 pt-3 pb-2.5 border-b border-border
-        hover:bg-slate-50/70 transition-colors duration-100 cursor-pointer"
+        hover:bg-slate-50/70 dark:hover:bg-slate-800/60 transition-colors duration-100 cursor-pointer"
     >
       {/* ── Avatar (right in RTL) ──── */}
       <Avatar name={author} url={avatarUrl} gradient={avatarGradient} />
@@ -139,9 +139,6 @@ export default function PostCard({
             <span className="text-[15px] font-bold text-foreground leading-tight truncate">
               {author}
             </span>
-            {role && (
-              <span className="text-[11px] text-slate-400 font-normal shrink-0 select-none">· {role}</span>
-            )}
             <span className="text-[13px] text-muted-fg shrink-0">· {time}</span>
           </div>
           {/* More button */}
@@ -155,16 +152,6 @@ export default function PostCard({
             <MoreHorizontal className="w-[18px] h-[18px]" />
           </button>
         </div>
-
-        {/* Category pill */}
-        {category && (
-          <span
-            className={`inline-block text-[11px] font-semibold px-2.5 py-0.5
-              rounded-full mb-2 tracking-wide ${categoryColor}`}
-          >
-            {category}
-          </span>
-        )}
 
         {/* Row 2: Content */}
         <p className="text-[15px] text-foreground leading-[1.6] mb-3 text-right">
