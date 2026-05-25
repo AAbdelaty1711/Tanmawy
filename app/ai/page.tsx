@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import DashboardLayout from "@/src/components/layout/DashboardLayout";
 import { useUserStore } from "@/src/store/useUserStore";
-import { Sparkles, Send } from "lucide-react";
+import { Sparkles, Send, Users, HeartHandshake, ShieldCheck, Award } from "lucide-react";
 
 /* ── Types ───────────────────────────────────────────── */
 type Role = "user" | "ai";
@@ -124,6 +124,81 @@ function LoadingDots() {
   );
 }
 
+/* ── Statistics Data & Components ────────────────────── */
+interface StatCard {
+  title: string;
+  value: string;
+  sub: string;
+  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  color: string;
+  bgColor: string;
+}
+
+const SITE_STATS: StatCard[] = [
+  {
+    title: "المستفيدون والمدعومون",
+    value: "12,450+ أسرة",
+    sub: "موزعة في جميع مناطق المملكة",
+    icon: Users,
+    color: "text-teal-500 dark:text-teal-400",
+    bgColor: "bg-teal-500/10",
+  },
+  {
+    title: "المتطوعون النشطون",
+    value: "1,820+ متطوع",
+    sub: "↑ 12% زيادة هذا الشهر",
+    icon: Award,
+    color: "text-amber-500 dark:text-amber-400",
+    bgColor: "bg-amber-500/10",
+  },
+  {
+    title: "التبرعات والمبادرات",
+    value: "3.2M+ ر.س",
+    sub: "تغطي 48 مبادرة تنموية",
+    icon: HeartHandshake,
+    color: "text-indigo-500 dark:text-indigo-400",
+    bgColor: "bg-indigo-500/10",
+  },
+  {
+    title: "الكيانات والمؤسسات",
+    value: "140+ جهة",
+    sub: "موثقة ومعتمدة بالكامل",
+    icon: ShieldCheck,
+    color: "text-rose-500 dark:text-rose-400",
+    bgColor: "bg-rose-500/10",
+  },
+];
+
+function FloatingStatCard({ card, index }: { card: StatCard; index: number }) {
+  const Icon = card.icon;
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: index < 2 ? -30 : 30, y: 0 }}
+      animate={{ 
+        opacity: 1, 
+        x: 0,
+        y: [0, -8, 0]
+      }}
+      transition={{
+        opacity: { duration: 0.5, delay: index * 0.15 },
+        x: { duration: 0.5, delay: index * 0.15 },
+        y: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: index * 0.5 }
+      }}
+      whileHover={{ scale: 1.03 }}
+      className="p-4 bg-white/40 dark:bg-slate-900/35 backdrop-blur-md border border-slate-200/40 dark:border-white/5 rounded-2xl shadow-sm hover:shadow-md transition-shadow flex items-start gap-3.5 text-right"
+    >
+      <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${card.bgColor} ${card.color}`}>
+        <Icon className="w-5 h-5" />
+      </div>
+      <div className="flex-1 min-w-0 text-right">
+        <p className="text-[11px] font-bold text-slate-400 dark:text-slate-550 mb-0.5 leading-none">{card.title}</p>
+        <p className="text-[16px] font-black text-slate-800 dark:text-slate-100 mb-1 leading-tight">{card.value}</p>
+        <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-normal">{card.sub}</p>
+      </div>
+    </motion.div>
+  );
+}
+
 /* ── Main Page ───────────────────────────────────────── */
 export default function AIPage() {
   const { isFounder } = useUserStore();
@@ -195,10 +270,21 @@ export default function AIPage() {
 
   return (
     <DashboardLayout>
-      <div className="flex flex-col h-[calc(100vh-50px)]">
+      <div className="flex flex-col h-[calc(100vh-50px)] relative overflow-hidden">
+        {/* Floating Stats - Left Column (Desktop) */}
+        <div className="absolute left-6 top-8 w-60 hidden xl:flex flex-col gap-4 z-20">
+          <FloatingStatCard card={SITE_STATS[0]} index={0} />
+          <FloatingStatCard card={SITE_STATS[1]} index={1} />
+        </div>
+
+        {/* Floating Stats - Right Column (Desktop) */}
+        <div className="absolute right-6 top-8 w-60 hidden xl:flex flex-col gap-4 z-20">
+          <FloatingStatCard card={SITE_STATS[2]} index={2} />
+          <FloatingStatCard card={SITE_STATS[3]} index={3} />
+        </div>
 
         {/* ── Chat area ── */}
-        <div className="flex-1 overflow-y-auto px-4 py-6">
+        <div className="flex-1 overflow-y-auto px-4 py-6 z-10">
 
           {/* Empty / Welcome state */}
           <AnimatePresence>
@@ -223,9 +309,34 @@ export default function AIPage() {
                 <h1 className="text-[22px] font-black text-slate-900 dark:text-slate-100 mb-2">
                   مرحباً بك في تنموي AI
                 </h1>
-                <p className="text-[14px] text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm mb-8">
+                <p className="text-[14px] text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm mb-6">
                   مساعدك الذكي لتعظيم الأثر المجتمعي وإدارة المبادرات بفعالية
                 </p>
+
+                {/* Mobile/Tablet Stats Grid */}
+                <div className="grid grid-cols-2 gap-3 w-full max-w-2xl mb-8 xl:hidden text-right">
+                  {SITE_STATS.map((card, i) => {
+                    const Icon = card.icon;
+                    return (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: i * 0.1 }}
+                        className="p-3 bg-white/40 dark:bg-slate-900/35 backdrop-blur-md border border-slate-200/40 dark:border-white/5 rounded-2xl flex items-start gap-3 shadow-sm text-right"
+                      >
+                        <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${card.bgColor} ${card.color}`}>
+                          <Icon className="w-4.5 h-4.5" />
+                        </div>
+                        <div className="min-w-0 text-right">
+                          <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 mb-0.5 truncate">{card.title}</p>
+                          <p className="text-[13.5px] font-black text-slate-800 dark:text-slate-100 truncate leading-none mb-1">{card.value}</p>
+                          <p className="text-[9.5px] text-slate-550 dark:text-slate-400 truncate">{card.sub}</p>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
 
                 {/* Role badge */}
                 <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-bold mb-6 ${

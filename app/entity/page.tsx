@@ -8,7 +8,7 @@ import { useUserStore } from "@/src/store/useUserStore";
 import {
   BadgeCheck, ShieldCheck, Plus, TrendingUp,
   BrainCircuit, Wallet, Users, Megaphone, FolderHeart, Link as LinkIcon,
-  Gift, ArrowUpRight, ChevronRight
+  Gift, ArrowUpRight, ChevronRight, UserPlus
 } from "lucide-react";
 
 import { AIView } from "./_components/AIView";
@@ -17,6 +17,8 @@ import { BeneficiariesView } from "./_components/BeneficiariesView";
 import { MarketingView } from "./_components/MarketingView";
 import { ProjectsView } from "./_components/ProjectsView";
 import { LinksView } from "./_components/LinksView";
+import { InviteMembersView } from "./_components/InviteMembersView";
+import { ManageMembersView } from "./_components/ManageMembersView";
 
 /* ── Animation helper ───────────────────────────────── */
 function fadeUpProps(i: number) {
@@ -150,6 +152,22 @@ const TOOLS: ToolCard[] = [
     icon: LinkIcon,
     iconBg: "bg-emerald-50",
     iconColor: "text-emerald-500",
+  },
+  {
+    id: "invite-members",
+    title: "دعوة الأعضاء",
+    description: "إرسال دعوات وتوليد روابط انضمام سريعة",
+    icon: UserPlus,
+    iconBg: "bg-indigo-50",
+    iconColor: "text-indigo-500",
+  },
+  {
+    id: "manage-members",
+    title: "إدارة الأعضاء",
+    description: "التحكم في أدوار موظفي الكيان وتعديل صلاحياتهم",
+    icon: ShieldCheck,
+    iconBg: "bg-violet-50",
+    iconColor: "text-violet-500",
   },
 ];
 
@@ -303,6 +321,8 @@ export default function EntityPage() {
       case 'marketing': return <MarketingView />;
       case 'projects': return <ProjectsView />;
       case 'links': return <LinksView />;
+      case 'invite-members': return <InviteMembersView />;
+      case 'manage-members': return <ManageMembersView />;
       default: return null;
     }
   };

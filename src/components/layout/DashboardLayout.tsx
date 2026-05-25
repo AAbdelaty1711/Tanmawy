@@ -7,6 +7,7 @@ import Navbar from './Navbar'
 import { usePathname } from 'next/navigation'
 import { Sparkles, Building2, Wallet, FolderKanban, Users } from 'lucide-react'
 import { useUserStore } from '@/src/store/useUserStore'
+import { useLayoutStore } from '@/src/store/useLayoutStore'
 
 interface DashboardLayoutProps {
   children: React.ReactNode
@@ -20,11 +21,19 @@ export default function DashboardLayout({
 }: DashboardLayoutProps) {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
-  const [isLeftPanelOpen, setIsLeftPanelOpen] = useState(false)
+  const { isLeftPanelOpen, setLeftPanelOpen, toggleLeftPanel } = useLayoutStore()
   const pathname = usePathname()
 
   const hideLeftColumnRoutes = ['/entity', '/lab', '/create-entity', '/ai']
   const hideLeftColumn = hideLeftColumnRoutes.some((p) => pathname?.startsWith(p))
+
+  // Load left panel preference on mount
+  useEffect(() => {
+    const saved = localStorage.getItem('isLeftPanelOpen')
+    if (saved !== null) {
+      setLeftPanelOpen(saved === 'true')
+    }
+  }, [setLeftPanelOpen])
 
   // ── Prevent body scroll when mobile drawer is open ─────
   useEffect(() => {
@@ -40,10 +49,22 @@ export default function DashboardLayout({
 
   // ── Close left panel on content-heavy routes ───────────
   useEffect(() => {
-    if (hideLeftColumn) setIsLeftPanelOpen(false)
-  }, [hideLeftColumn])
+    if (hideLeftColumn) {
+      setLeftPanelOpen(false)
+    } else {
+      // Re-hydrate state from localStorage when navigating back to pages that support it
+      const saved = localStorage.getItem('isLeftPanelOpen')
+      if (saved !== null) {
+        setLeftPanelOpen(saved === 'true')
+      }
+    }
+  }, [hideLeftColumn, setLeftPanelOpen, pathname])
 
-  const handleLeftPanelToggle = () => setIsLeftPanelOpen((o) => !o)
+  const handleLeftPanelToggle = () => {
+    const nextState = !isLeftPanelOpen
+    toggleLeftPanel()
+    localStorage.setItem('isLeftPanelOpen', String(nextState))
+  }
 
   return (
     <div className="min-h-screen bg-background font-sans" dir="rtl">
@@ -88,7 +109,7 @@ export default function DashboardLayout({
             Default: CLOSED. Opens via Navbar toggle.
             Animates width 0 → 320px, pushing content.
             Only visible on xl+ screens.               */}
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
           {isLeftPanelOpen && !hideLeftColumn && (
             <motion.aside
               key="left-panel"
@@ -199,7 +220,7 @@ function DefaultWidgets() {
           <h3 className="text-sm font-bold text-foreground">المبادرات المكتملة</h3>
         </div>
 
-        <ul className="divide-y divide-border">
+        <ul className="divide-y divide-border max-h-[240px] overflow-y-auto">
           {completedInitiatives.map((item) => {
             return (
               <li

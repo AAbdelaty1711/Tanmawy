@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, X, Target, Calendar, MapPin, Users, Coins, FileText } from "lucide-react";
+import { Plus, X, Target, Calendar, MapPin, Users, Coins, FileText, UploadCloud, CheckCircle2 } from "lucide-react";
 import { createPortal } from "react-dom";
 
 export function ProjectsView() {
@@ -12,6 +12,7 @@ export function ProjectsView() {
   ]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     category: "أسر محتاجة",
@@ -19,7 +20,16 @@ export function ProjectsView() {
     region: "الرياض",
     description: "",
     daysLeft: "30",
+    fileName: "",
   });
+
+  const handleUpload = () => {
+    setUploading(true);
+    setTimeout(() => {
+      setUploading(false);
+      setFormData((prev) => ({ ...prev, fileName: "دراسة_جدوى_المبادرة_مرفقة.pdf" }));
+    }, 1000);
+  };
 
   const handleCreate = (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,6 +54,7 @@ export function ProjectsView() {
       region: "الرياض",
       description: "",
       daysLeft: "30",
+      fileName: "",
     });
   };
 
@@ -229,6 +240,36 @@ export function ProjectsView() {
                       className="w-full pr-10 pl-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900/50 text-[14px] text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-650 outline-none transition-all focus:bg-white dark:focus:bg-slate-900 focus:border-teal-400 dark:focus:border-teal-500 resize-none"
                     />
                   </div>
+                </div>
+
+                {/* File Attachment */}
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">الملفات الثبوتية ودراسة الجدوى</label>
+                  <button
+                    type="button"
+                    onClick={handleUpload}
+                    disabled={uploading}
+                    className={`w-full py-5 border-2 border-dashed rounded-xl flex flex-col items-center justify-center gap-2 cursor-pointer transition-colors ${
+                      formData.fileName 
+                        ? "border-emerald-500 bg-emerald-50/20 dark:border-emerald-900/30" 
+                        : "border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-800"
+                    }`}
+                  >
+                    {uploading ? (
+                      <div className="w-5 h-5 border-2 border-primary/20 border-t-primary rounded-full animate-spin" />
+                    ) : formData.fileName ? (
+                      <>
+                        <CheckCircle2 className="w-6 h-6 text-emerald-500" />
+                        <span className="text-[12px] font-bold text-emerald-600 dark:text-emerald-450">{formData.fileName}</span>
+                      </>
+                    ) : (
+                      <>
+                        <UploadCloud className="w-6 h-6 text-slate-450 dark:text-slate-500" />
+                        <span className="text-[12px] font-bold text-slate-600 dark:text-slate-300">انقر لرفع المستندات (خطط العمل، دراسة الجدوى، صور التراخيص)</span>
+                        <span className="text-[10px] text-slate-400 dark:text-slate-550 font-medium">PDF, DOCX, PNG, JPG حتى 10 ميجابايت</span>
+                      </>
+                    )}
+                  </button>
                 </div>
 
                 {/* Actions */}

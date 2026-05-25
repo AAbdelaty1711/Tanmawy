@@ -2,14 +2,14 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Plus, X, User, CreditCard, Users, HeartHandshake, CircleDollarSign, UploadCloud, CheckCircle2 } from "lucide-react";
+import { Plus, X, User, CreditCard, Users, HeartHandshake, CircleDollarSign, UploadCloud, CheckCircle2, FolderHeart } from "lucide-react";
 import { createPortal } from "react-dom";
 
 export function BeneficiariesView() {
   const [families, setFamilies] = useState([
-    { name: "عائلة أحمد عبد الله", type: "دعم مالي شهري", status: "نشط", nationalId: "1092837465", members: 5 },
-    { name: "عائلة اليتيم فهد", type: "كفالة أيتام", status: "نشط", nationalId: "1082736452", members: 3 },
-    { name: "عائلة محمد حسن", type: "سلة غذائية", status: "قيد المراجعة", nationalId: "1072839401", members: 6 },
+    { name: "عائلة عبدالله السديري", type: "دعم مالي شهري", status: "نشط", nationalId: "1092837465", members: 5, program: "حملة الشتاء الدافئ" },
+    { name: "عائلة اليتيم فهد الخالدي", type: "كفالة أيتام", status: "نشط", nationalId: "1082736452", members: 3, program: "كفالة 100 طالب علم متميز" },
+    { name: "عائلة محمد الشمري", type: "سلة غذائية", status: "قيد المراجعة", nationalId: "1072839401", members: 6, program: "سقيا الماء وحفر الآبار" },
   ]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,6 +20,7 @@ export function BeneficiariesView() {
     type: "دعم مالي شهري",
     income: "",
     fileName: "",
+    program: "حملة الشتاء الدافئ",
   });
 
   const [uploading, setUploading] = useState(false);
@@ -42,6 +43,7 @@ export function BeneficiariesView() {
       status: "قيد المراجعة",
       nationalId: formData.nationalId,
       members: parseInt(formData.members) || 1,
+      program: formData.program,
     };
 
     setFamilies([newFamily, ...families]);
@@ -53,6 +55,7 @@ export function BeneficiariesView() {
       type: "دعم مالي شهري",
       income: "",
       fileName: "",
+      program: "حملة الشتاء الدافئ",
     });
   };
 
@@ -84,12 +87,20 @@ export function BeneficiariesView() {
               <h4 className="text-[15px] font-black text-slate-900 dark:text-slate-100 mb-1">
                 {f.name}
               </h4>
-              <div className="flex items-center gap-2 text-[11px] font-semibold text-slate-450 dark:text-slate-500">
+              <div className="flex items-center gap-2 text-[11px] font-semibold text-slate-455 dark:text-slate-500 flex-wrap">
                 <span>{f.type}</span>
                 <span>•</span>
                 <span>{f.members} أفراد</span>
                 <span>•</span>
                 <span className="tabular-nums">هوية: {f.nationalId}</span>
+                {f.program && (
+                  <>
+                    <span>•</span>
+                    <span className="bg-indigo-50/50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 border border-indigo-100/60 dark:border-indigo-900/30 px-2 py-0.5 rounded-md font-bold text-[10px]">
+                      {f.program}
+                    </span>
+                  </>
+                )}
               </div>
             </div>
             <span
@@ -220,6 +231,23 @@ export function BeneficiariesView() {
                         className="w-full pr-10 pl-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900/50 text-[14px] text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-655 outline-none transition-all focus:bg-white dark:focus:bg-slate-900 focus:border-teal-400 dark:focus:border-teal-500"
                       />
                     </div>
+                  </div>
+                </div>
+
+                {/* Program/Initiative Selection */}
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">البرنامج / المبادرة التابع لها</label>
+                  <div className="relative">
+                    <FolderHeart className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-455 dark:text-slate-500 pointer-events-none" />
+                    <select
+                      value={formData.program}
+                      onChange={(e) => setFormData({ ...formData, program: e.target.value })}
+                      className="w-full pr-10 pl-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900/50 text-[14px] text-slate-800 dark:text-slate-100 outline-none transition-all focus:bg-white dark:focus:bg-slate-900 focus:border-teal-400 dark:focus:border-teal-500 appearance-none cursor-pointer"
+                    >
+                      <option value="حملة الشتاء الدافئ">حملة الشتاء الدافئ</option>
+                      <option value="سقيا الماء وحفر الآبار">سقيا الماء وحفر الآبار</option>
+                      <option value="كفالة 100 طالب علم متميز">كفالة 100 طالب علم متميز</option>
+                    </select>
                   </div>
                 </div>
 

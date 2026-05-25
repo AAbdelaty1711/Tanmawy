@@ -95,7 +95,7 @@ export default function Sidebar({
             className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-teal-50 dark:hover:bg-teal-950/40 transition-colors"
             aria-label="تنموي"
           >
-            <Sprout className="w-6 h-6 text-teal-500" strokeWidth={2.5} />
+            <img src="/logo.png" alt="تنموي" className="w-7 h-7 object-contain" />
           </Link>
           {/* Expand button */}
           <button
@@ -114,7 +114,7 @@ export default function Sidebar({
             className="inline-flex items-center justify-center w-12 h-12 rounded-full hover:bg-teal-50 dark:hover:bg-teal-950/40 transition-colors"
             aria-label="تنموي"
           >
-            <Sprout className="w-7 h-7 text-teal-500" strokeWidth={2.5} />
+            <img src="/logo.png" alt="تنموي" className="w-8 h-8 object-contain" />
           </Link>
 
           {/* Collapse button — desktop only, hidden in mobile drawer */}
@@ -233,7 +233,7 @@ export default function Sidebar({
           {showLabel && (
             <div className="flex flex-col flex-1 min-w-0 text-right">
               <span className="text-sm font-bold text-foreground truncate leading-tight">
-                عبدالله محمد
+                عبدالعزيز القحطاني
               </span>
             </div>
           )}

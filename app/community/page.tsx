@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 
 /* ── Mock Data for Active Initiatives ───────────────── */
-const INITIATIVES: (InitiativeCardProps & { region: string; goal: string; audience: string; details: string })[] = [
+const INITIATIVES: (InitiativeCardProps & { region: string; district: string; goal: string; audience: string; details: string })[] = [
   {
     id: 1,
     entityName: "جمعية البريد الخيرية",
@@ -26,6 +26,7 @@ const INITIATIVES: (InitiativeCardProps & { region: string; goal: string; audien
     target: 60000,
     avatarGradient: "from-emerald-200 to-teal-300",
     region: "الرياض",
+    district: "شمال الرياض",
     goal: "تنمية بيئية",
     audience: "المجتمع المحلي",
   },
@@ -42,6 +43,7 @@ const INITIATIVES: (InitiativeCardProps & { region: string; goal: string; audien
     target: 120000,
     avatarGradient: "from-blue-200 to-indigo-300",
     region: "مكة المكرمة",
+    district: "حي العزيزية",
     goal: "إسكان اجتماعي",
     audience: "أسر محتاجة",
   },
@@ -58,6 +60,7 @@ const INITIATIVES: (InitiativeCardProps & { region: string; goal: string; audien
     target: 85000,
     avatarGradient: "from-cyan-200 to-sky-300",
     region: "المنطقة الشرقية",
+    district: "الخبر",
     goal: "مياه وصحة",
     audience: "سكان القرى",
   },
@@ -265,7 +268,7 @@ function CommunityWidgets() {
           </span>
           <h3 className="text-sm font-bold text-foreground">المبادرات المكتملة</h3>
         </div>
-        <ul className="divide-y divide-slate-100 dark:divide-slate-800">
+        <ul className="divide-y divide-slate-100 dark:divide-slate-800 max-h-[240px] overflow-y-auto">
           {completedList.map((item) => (
             <li key={item.name} className="px-4 py-3 hover:bg-slate-50 dark:hover:bg-white/[0.04] cursor-pointer transition-colors">
               <div className="flex items-start justify-between gap-2 mb-1.5">
@@ -320,6 +323,13 @@ function CommunityWidgets() {
   );
 }
 
+const DISTRICTS_MAP: Record<string, string[]> = {
+  "الرياض": ["شمال الرياض", "شرق الرياض", "غرب الرياض", "جنوب الرياض"],
+  "مكة المكرمة": ["حي العزيزية", "حي الشوقية", "حي بطحاء قريش", "المنطقة المركزية"],
+  "المنطقة الشرقية": ["الدمام", "الخبر", "الجبيل", "الأحساء"],
+  "عسير": ["أبها", "خميس مشيط", "محايل عسير"],
+};
+
 /* ── Tabs ─────────────────────────────────────────────── */
 const TABS = [
   { id: "all",       label: "كل المبادرات",     icon: Globe  },
@@ -342,15 +352,22 @@ export default function CommunityPage() {
   // Search & Filter State
   const [searchQuery, setSearchQuery] = useState("");
   const [regionFilter, setRegionFilter] = useState("all");
+  const [districtFilter, setDistrictFilter] = useState("all");
   const [audienceFilter, setAudienceFilter] = useState("all");
   const [goalFilter, setGoalFilter] = useState("all");
+
+  // Reset district filter when region changes
+  useEffect(() => {
+    setDistrictFilter("all");
+  }, [regionFilter]);
 
   const filteredInitiatives = INITIATIVES.filter((item) => {
     const matchesSearch = item.title.includes(searchQuery) || item.description.includes(searchQuery) || item.entityName.includes(searchQuery);
     const matchesRegion = regionFilter === "all" || item.region === regionFilter;
+    const matchesDistrict = districtFilter === "all" || item.district === districtFilter;
     const matchesAudience = audienceFilter === "all" || item.audience === audienceFilter;
     const matchesGoal = goalFilter === "all" || item.goal === goalFilter;
-    return matchesSearch && matchesRegion && matchesAudience && matchesGoal;
+    return matchesSearch && matchesRegion && matchesDistrict && matchesAudience && matchesGoal;
   });
 
   return (
@@ -404,7 +421,7 @@ export default function CommunityPage() {
           </div>
 
           {/* Select Filters Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-2.5">
             {/* Region */}
             <div className="relative flex items-center">
               <MapPin className="absolute right-3 w-4 h-4 text-slate-400 pointer-events-none" />
@@ -418,6 +435,30 @@ export default function CommunityPage() {
                 <option value="مكة المكرمة">مكة المكرمة</option>
                 <option value="المنطقة الشرقية">المنطقة الشرقية</option>
                 <option value="عسير">عسير</option>
+              </select>
+            </div>
+
+            {/* District within Region */}
+            <div className="relative flex items-center">
+              <MapPin className="absolute right-3 w-4 h-4 text-slate-400 pointer-events-none" />
+              <select
+                value={districtFilter}
+                onChange={(e) => setDistrictFilter(e.target.value)}
+                disabled={regionFilter === "all"}
+                className="w-full pr-9 pl-4 py-2 rounded-xl border border-slate-200 dark:border-white/10 bg-surface text-[12.5px] text-slate-700 dark:text-slate-355 font-semibold outline-none appearance-none cursor-pointer focus:border-teal-400 dark:focus:border-teal-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {regionFilter === "all" ? (
+                  <option value="all">حدد المدينة أولاً</option>
+                ) : (
+                  <>
+                    <option value="all">كل الأحياء والمناطق</option>
+                    {DISTRICTS_MAP[regionFilter]?.map((d) => (
+                      <option key={d} value={d}>
+                        {d}
+                      </option>
+                    ))}
+                  </>
+                )}
               </select>
             </div>
 

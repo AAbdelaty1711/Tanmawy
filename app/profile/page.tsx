@@ -153,7 +153,7 @@ function AboutSection({ isFounder }: { isFounder: boolean }) {
     { icon: Calendar, label: "تاريخ التأسيس", value: "2021 • رقم الترخيص: SA-10293" },
   ];
   const userInfo = [
-    { icon: Mail, label: "البريد الإلكتروني", value: "abdullah.m@email.com" },
+    { icon: Mail, label: "البريد الإلكتروني", value: "abdulaziz.q@email.com" },
     { icon: MapPin, label: "الموقع", value: "الرياض، المملكة العربية السعودية" },
     { icon: Calendar, label: "تاريخ الانضمام", value: "مارس 2026" },
   ];
@@ -262,7 +262,7 @@ export default function ProfilePage() {
           {/* Name */}
           <div className="flex items-center gap-2 mb-1">
             <h1 className="text-[20px] font-black text-slate-900 dark:text-slate-100">
-              {isFounder ? "جمعية نقاء التنموية" : "عبدالله محمد"}
+              {isFounder ? "جمعية نقاء التنموية" : "عبدالعزيز القحطاني"}
             </h1>
             {isFounder && <BadgeCheck className="w-5 h-5 text-primary shrink-0" strokeWidth={2.5} />}
           </div>

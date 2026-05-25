@@ -151,10 +151,8 @@ export default function AuthPanel({ children }: AuthPanelProps) {
             animate={{ y: [0, -6, 0] }}
             transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
           >
-            <Link href="/" className="flex flex-col items-center gap-3">
-              <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center shadow-xl">
-                <Sprout className="w-8 h-8 text-white" strokeWidth={2.2} />
-              </div>
+            <Link href="/" className="flex flex-col items-center gap-2">
+              <img src="/logo.png" alt="تنموي" className="w-22 h-22 object-contain" />
               <span className="text-white text-2xl font-black tracking-tight drop-shadow-md">تنموي</span>
             </Link>
           </motion.div>
@@ -218,15 +216,12 @@ export default function AuthPanel({ children }: AuthPanelProps) {
             transition={{ duration: 0.6 }}
             className="mb-8"
           >
-            <Link href="/" className="inline-flex flex-col gap-3 group items-end">
+            <Link href="/" className="inline-flex flex-col gap-2 group items-end">
               <motion.div
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm border border-white/30
-                           flex items-center justify-center shadow-xl
-                           group-hover:bg-white/28 transition-all duration-300"
               >
-                <Sprout className="w-8 h-8 text-white" strokeWidth={2.2} />
+                <img src="/logo.png" alt="تنموي" className="w-22 h-22 object-contain" />
               </motion.div>
               <span className="text-white text-2xl font-black tracking-tight drop-shadow-md">تنموي</span>
             </Link>

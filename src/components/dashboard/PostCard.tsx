@@ -18,6 +18,7 @@ export interface PostCardProps {
   avatarUrl?: string;
   /** Optional gradient stops for the fallback avatar */
   avatarGradient?: string;
+  entity?: string;
 }
 
 /** Formats numbers like Twitter: 1.2K, 42, etc. */
@@ -116,6 +117,7 @@ export default function PostCard({
   reposts: initialReposts = 0,
   avatarUrl,
   avatarGradient,
+  entity,
 }: PostCardProps) {
   const [liked,    setLiked]    = useState(false);
   const [likes,    setLikes]    = useState(initialLikes);
@@ -139,6 +141,11 @@ export default function PostCard({
             <span className="text-[15px] font-bold text-foreground leading-tight truncate">
               {author}
             </span>
+            {entity && (
+              <span className="shrink-0 text-[10.5px] font-bold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-355 border border-slate-200 dark:border-white/5">
+                {entity}
+              </span>
+            )}
             <span className="text-[13px] text-muted-fg shrink-0">· {time}</span>
           </div>
           {/* More button */}

@@ -13,21 +13,25 @@ const CHECKBOXES = [
   { id: "ethics", label: 'أتعهد بالالتزام بميثاق "تنموي" الأخلاقي.' },
 ];
 
-export default function StepPledge({ onBack }: { onBack: () => void }) {
-  const router = useRouter();
+export default function StepPledge({
+  onBack,
+  onSubmit,
+  submitting,
+}: {
+  onBack: () => void;
+  onSubmit: () => void;
+  submitting: boolean;
+}) {
   const [checked, setChecked] = useState<Record<string, boolean>>({});
-  const [submitting, setSubmitting] = useState(false);
 
   const allChecked = CHECKBOXES.every(({ id }) => checked[id]);
 
   const toggle = (id: string) =>
     setChecked((p) => ({ ...p, [id]: !p[id] }));
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!allChecked) return;
-    setSubmitting(true);
-    await new Promise((r) => setTimeout(r, 1800));
-    router.push("/");
+    onSubmit();
   };
 
   return (
@@ -54,12 +58,12 @@ export default function StepPledge({ onBack }: { onBack: () => void }) {
 
       {/* Checkboxes */}
       <div className="space-y-3">
-        {CHECKBOXES.map(({ id, label }) => (
-          <label
+        {CHECKBOXES.map(({ id, label: checkboxLabel }) => (
+          <div
             key={id}
-            htmlFor={id}
+            onClick={() => toggle(id)}
             className={`
-              flex items-start gap-3 p-3.5 rounded-xl border cursor-pointer transition-all duration-200
+              flex items-start gap-3 p-3.5 rounded-xl border cursor-pointer transition-all duration-200 select-none text-right
               ${checked[id]
                 ? "border-teal-300 dark:border-teal-800/60 bg-teal-50/60 dark:bg-teal-950/20"
                 : "border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900/50 hover:border-slate-300 dark:hover:border-white/20"
@@ -68,10 +72,9 @@ export default function StepPledge({ onBack }: { onBack: () => void }) {
           >
             <div className="mt-0.5 shrink-0">
               <input
-                id={id}
                 type="checkbox"
                 checked={!!checked[id]}
-                onChange={() => toggle(id)}
+                readOnly
                 className="sr-only"
               />
               <motion.div
@@ -92,9 +95,9 @@ export default function StepPledge({ onBack }: { onBack: () => void }) {
               </motion.div>
             </div>
             <span className={`text-[13.5px] font-medium leading-relaxed ${checked[id] ? "text-teal-800 dark:text-teal-400" : "text-slate-700 dark:text-slate-300"}`}>
-              {label}
+              {checkboxLabel}
             </span>
-          </label>
+          </div>
         ))}
       </div>
 
