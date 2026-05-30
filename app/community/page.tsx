@@ -45,7 +45,7 @@ const INITIATIVES: (InitiativeCardProps & { region: string; district: string; go
     region: "مكة المكرمة",
     district: "حي العزيزية",
     goal: "إسكان اجتماعي",
-    audience: "أسر محتاجة",
+    audience: "أسر فقيرة",
   },
   {
     id: 3,
@@ -82,7 +82,7 @@ const COMPLETED_INITIATIVES: (InitiativeCardProps & { region: string; goal: stri
     avatarGradient: "from-emerald-205 to-teal-300",
     region: "الرياض",
     goal: "مياه وصحة",
-    audience: "أسر محتاجة",
+    audience: "أسر فقيرة",
   },
   {
     id: 102,
@@ -162,7 +162,7 @@ function DetailModal({
                 <BadgeCheck className="w-4 h-4 text-primary" strokeWidth={2.5} />
               </span>
               <span>•</span>
-              <span className="text-emerald-600 dark:text-emerald-450">{initiative.timestamp}</span>
+              <span className="text-emerald-600 dark:text-emerald-455">{initiative.timestamp}</span>
             </div>
           </div>
 
@@ -187,7 +187,7 @@ function DetailModal({
             <h4 className="text-[15px] font-black text-slate-900 dark:text-slate-100 flex items-center gap-2">
               <Target className="w-4 h-4 text-primary" /> تفاصيل المبادرة التنموية
             </h4>
-            <p className="text-[14px] text-slate-600 dark:text-slate-350 leading-relaxed">
+            <p className="text-[14px] text-slate-600 dark:text-slate-355 leading-relaxed">
               {initiative.description}
             </p>
             <p className="text-[13.5px] text-slate-500 dark:text-slate-400 leading-relaxed border-t border-slate-100 dark:border-white/5 pt-3">
@@ -291,7 +291,7 @@ function CommunityWidgets() {
           <h3 className="text-sm font-bold text-foreground">رؤية تنموي AI</h3>
         </div>
         <div className="bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-900/30 rounded-xl p-3.5 text-right">
-          <p className="text-[13px] text-slate-700 dark:text-slate-350 font-medium leading-relaxed">
+          <p className="text-[13px] text-slate-700 dark:text-slate-355 font-medium leading-relaxed">
             مبادرات المياه والتعليم حققت أعلى معدلات اكتمال هذا الأسبوع بفضل المساهمات المجتمعية النشطة.
           </p>
           <button className="mt-2 text-[11px] font-bold text-secondary hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
@@ -428,7 +428,7 @@ export default function CommunityPage() {
               <select
                 value={regionFilter}
                 onChange={(e) => setRegionFilter(e.target.value)}
-                className="w-full pr-9 pl-4 py-2 rounded-xl border border-slate-200 dark:border-white/10 bg-surface text-[12.5px] text-slate-700 dark:text-slate-355 font-semibold outline-none appearance-none cursor-pointer focus:border-teal-400 dark:focus:border-teal-500"
+                className="w-full pr-9 pl-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-surface text-[14px] text-slate-800 dark:text-slate-100 font-bold outline-none appearance-none cursor-pointer focus:border-teal-400 dark:focus:border-teal-500"
               >
                 <option value="all">كل المناطق الجغرافية</option>
                 <option value="الرياض">الرياض</option>
@@ -445,7 +445,7 @@ export default function CommunityPage() {
                 value={districtFilter}
                 onChange={(e) => setDistrictFilter(e.target.value)}
                 disabled={regionFilter === "all"}
-                className="w-full pr-9 pl-4 py-2 rounded-xl border border-slate-200 dark:border-white/10 bg-surface text-[12.5px] text-slate-700 dark:text-slate-355 font-semibold outline-none appearance-none cursor-pointer focus:border-teal-400 dark:focus:border-teal-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full pr-9 pl-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-surface text-[14px] text-slate-800 dark:text-slate-100 font-bold outline-none appearance-none cursor-pointer focus:border-teal-400 dark:focus:border-teal-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {regionFilter === "all" ? (
                   <option value="all">حدد المدينة أولاً</option>
@@ -468,10 +468,10 @@ export default function CommunityPage() {
               <select
                 value={audienceFilter}
                 onChange={(e) => setAudienceFilter(e.target.value)}
-                className="w-full pr-9 pl-4 py-2 rounded-xl border border-slate-200 dark:border-white/10 bg-surface text-[12.5px] text-slate-700 dark:text-slate-355 font-semibold outline-none appearance-none cursor-pointer focus:border-teal-400 dark:focus:border-teal-500"
+                className="w-full pr-9 pl-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-surface text-[14px] text-slate-800 dark:text-slate-100 font-bold outline-none appearance-none cursor-pointer focus:border-teal-400 dark:focus:border-teal-500"
               >
                 <option value="all">كل الفئات المستهدفة</option>
-                <option value="أسر محتاجة">أسر محتاجة</option>
+                <option value="أسر فقيرة">أسر فقيرة</option>
                 <option value="المجتمع المحلي">المجتمع المحلي</option>
                 <option value="سكان القرى">سكان القرى</option>
               </select>
@@ -483,7 +483,7 @@ export default function CommunityPage() {
               <select
                 value={goalFilter}
                 onChange={(e) => setGoalFilter(e.target.value)}
-                className="w-full pr-9 pl-4 py-2 rounded-xl border border-slate-200 dark:border-white/10 bg-surface text-[12.5px] text-slate-700 dark:text-slate-355 font-semibold outline-none appearance-none cursor-pointer focus:border-teal-400 dark:focus:border-teal-500"
+                className="w-full pr-9 pl-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-surface text-[14px] text-slate-800 dark:text-slate-100 font-bold outline-none appearance-none cursor-pointer focus:border-teal-400 dark:focus:border-teal-500"
               >
                 <option value="all">كل الأهداف والبرامج</option>
                 <option value="مياه وصحة">مياه وصحة</option>
@@ -594,7 +594,7 @@ function ImpactReport() {
         <div className="px-5 py-4 border-b border-border bg-slate-50/50 dark:bg-slate-900/30 flex items-center justify-between">
           <div>
             <h3 className="text-[15px] font-black text-slate-900 dark:text-slate-100">سجل الأثر الخاص بك</h3>
-            <p className="text-[12px] text-slate-400 dark:text-slate-500 mt-0.5">تقارير أثر تبرعاتك ومساهماتك الشخصية</p>
+            <p className="text-[12px] text-slate-400 dark:text-slate-555 mt-0.5">تقارير أثر تبرعاتك ومساهماتك الشخصية</p>
           </div>
           <span className="text-[10px] font-bold text-primary bg-primary/10 border border-primary/20 px-2.5 py-1 rounded-full uppercase tracking-wider">نشط</span>
         </div>
@@ -619,23 +619,23 @@ function ImpactReport() {
               <div className="flex justify-between items-start gap-3 mb-3">
                 <div>
                   <h5 className="text-[14px] font-black text-slate-900 dark:text-slate-100 leading-snug">{c.title}</h5>
-                  <p className="text-[11.5px] text-slate-400 dark:text-slate-550 mt-0.5 font-semibold">الجهة المشرفة: {c.entity}</p>
+                  <p className="text-[11.5px] text-slate-400 dark:text-slate-555 mt-0.5 font-semibold">الجهة المشرفة: {c.entity}</p>
                 </div>
-                <span className="shrink-0 text-[11px] font-bold text-emerald-600 dark:text-emerald-450 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900/40 px-2 py-0.5 rounded-full">
+                <span className="shrink-0 text-[11px] font-bold text-emerald-600 dark:text-emerald-455 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900/40 px-2 py-0.5 rounded-full">
                   مكتمل ومفعّل
                 </span>
               </div>
 
               {/* Achievement Result Box */}
               <div className="bg-slate-50 dark:bg-slate-900/40 border border-slate-150 dark:border-white/5 rounded-xl p-3.5 text-right space-y-1">
-                <span className="text-[10px] font-bold text-slate-455 dark:text-slate-550">الأثر الحقيقي لمساهمتك:</span>
+                <span className="text-[10px] font-bold text-slate-455 dark:text-slate-555">الأثر الحقيقي لمساهمتك:</span>
                 <p className="text-[13px] text-slate-800 dark:text-slate-200 font-bold leading-relaxed">
                   {c.achievement}
                 </p>
               </div>
 
               {/* Footer info */}
-              <div className="flex justify-between items-center mt-3 pt-3 border-t border-slate-100 dark:border-white/5 text-[11px] text-slate-400 dark:text-slate-550 font-semibold">
+              <div className="flex justify-between items-center mt-3 pt-3 border-t border-slate-100 dark:border-white/5 text-[11px] text-slate-400 dark:text-slate-555 font-semibold">
                 <span>قيمة دعمك: <strong className="text-primary font-bold">{c.donation}</strong></span>
                 <span>{c.date}</span>
               </div>

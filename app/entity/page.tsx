@@ -55,53 +55,99 @@ interface EntityItem {
   name: string;
   type: string;
   status: "active" | "pending";
-  emoji: string;
+  emoji?: string;
 }
 
 /* ── Data ────────────────────────────────────────────── */
 const MY_ENTITIES: EntityItem[] = [
-  { id: "1", name: "جمعية نقاء التنموية", type: "جمعية خيرية", status: "active", emoji: "🏛️" },
-  { id: "2", name: "مبادرة البيئة النظيفة", type: "مبادرة مجتمعية", status: "pending", emoji: "🌿" },
+  { id: "1", name: "جمعية نقاء التنموية", type: "جمعية خيرية", status: "active" },
+  { id: "2", name: "جمعية الأثر الأخضر التنموية", type: "جمعية خيرية", status: "active" },
 ];
 
-const STATS: StatCard[] = [
-  {
-    label: "إجمالي الإيرادات",
-    value: "120,500 ر.س",
-    sub: "↑ 14% هذا الشهر",
-    subColor: "text-emerald-600 dark:text-emerald-400",
-    icon: Wallet,
-    iconBg: "bg-emerald-50",
-    iconColor: "text-emerald-500",
+const ENTITY_DATA: Record<string, { stats: StatCard[], aiNote: string }> = {
+  "1": {
+    stats: [
+      {
+        label: "إجمالي الإيرادات",
+        value: "120,500 ر.س",
+        sub: "↑ 14% هذا الشهر",
+        subColor: "text-emerald-600 dark:text-emerald-400",
+        icon: Wallet,
+        iconBg: "bg-emerald-50",
+        iconColor: "text-emerald-500",
+      },
+      {
+        label: "المبادرات النشطة",
+        value: "3 مبادرات",
+        sub: "1 على وشك الاكتمال",
+        subColor: "text-amber-600 dark:text-amber-400",
+        icon: FolderHeart,
+        iconBg: "bg-amber-50",
+        iconColor: "text-amber-500",
+      },
+      {
+        label: "المستفيدون",
+        value: "450 أسرة",
+        sub: "↑ 32 هذا الأسبوع",
+        subColor: "text-blue-600 dark:text-blue-400",
+        icon: Users,
+        iconBg: "bg-blue-50",
+        iconColor: "text-blue-500",
+      },
+      {
+        label: "إجمالي التبرعات",
+        value: "74,200 ر.س",
+        sub: "↑ 22% هذا الشهر",
+        subColor: "text-violet-600 dark:text-violet-400",
+        icon: Gift,
+        iconBg: "bg-violet-50",
+        iconColor: "text-violet-500",
+      },
+    ],
+    aiNote: "بناءً على بيانات الشهر الماضي، يُوصى برفع الاستهداف لـ 600 أسرة في المبادرة البيئية.",
   },
-  {
-    label: "المبادرات النشطة",
-    value: "3 مبادرات",
-    sub: "1 على وشك الاكتمال",
-    subColor: "text-amber-600 dark:text-amber-400",
-    icon: FolderHeart,
-    iconBg: "bg-amber-50",
-    iconColor: "text-amber-500",
-  },
-  {
-    label: "المستفيدون",
-    value: "450 أسرة",
-    sub: "↑ 32 هذا الأسبوع",
-    subColor: "text-blue-600 dark:text-blue-400",
-    icon: Users,
-    iconBg: "bg-blue-50",
-    iconColor: "text-blue-500",
-  },
-  {
-    label: "إجمالي التبرعات",
-    value: "74,200 ر.س",
-    sub: "↑ 22% هذا الشهر",
-    subColor: "text-violet-600 dark:text-violet-400",
-    icon: Gift,
-    iconBg: "bg-violet-50",
-    iconColor: "text-violet-500",
-  },
-];
+  "2": {
+    stats: [
+      {
+        label: "إجمالي الإيرادات",
+        value: "85,300 ر.س",
+        sub: "↑ 8% هذا الشهر",
+        subColor: "text-emerald-600 dark:text-emerald-400",
+        icon: Wallet,
+        iconBg: "bg-emerald-50",
+        iconColor: "text-emerald-500",
+      },
+      {
+        label: "المبادرات النشطة",
+        value: "2 مبادرتين",
+        sub: "مكتملة ومستدامة",
+        subColor: "text-emerald-650 dark:text-emerald-450",
+        icon: FolderHeart,
+        iconBg: "bg-emerald-50",
+        iconColor: "text-emerald-500",
+      },
+      {
+        label: "المستفيدون",
+        value: "310 أسر",
+        sub: "↑ 12 هذا الأسبوع",
+        subColor: "text-blue-600 dark:text-blue-400",
+        icon: Users,
+        iconBg: "bg-blue-50",
+        iconColor: "text-blue-500",
+      },
+      {
+        label: "إجمالي التبرعات",
+        value: "52,400 ر.س",
+        sub: "↑ 18% هذا الشهر",
+        subColor: "text-violet-600 dark:text-violet-400",
+        icon: Gift,
+        iconBg: "bg-violet-50",
+        iconColor: "text-violet-500",
+      },
+    ],
+    aiNote: "بناءً على بيانات غرس الأشجار هذا الشهر، يُوصى بتوسيع النطاق في شرق الرياض ليشمل حديقتين إضافيتين 🌱.",
+  }
+};
 
 const TOOLS: ToolCard[] = [
   {
@@ -276,9 +322,11 @@ function EntityCard({
           : "bg-white dark:bg-slate-800/40 border-slate-100 dark:border-white/5 hover:border-slate-200 dark:hover:border-white/10 hover:shadow-sm"
       }`}
     >
-      <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0 ${active ? "bg-primary/10" : "bg-slate-50 dark:bg-slate-800"}`}>
-        {entity.emoji}
-      </div>
+      {entity.emoji && (
+        <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl shrink-0 ${active ? "bg-primary/10" : "bg-slate-50 dark:bg-slate-800"}`}>
+          {entity.emoji}
+        </div>
+      )}
       <div className="flex-1 min-w-0 text-right">
         <p className={`text-[13px] font-black truncate ${active ? "text-primary" : "text-slate-800 dark:text-slate-200"}`}>
           {entity.name}
@@ -312,6 +360,7 @@ export default function EntityPage() {
 
   const activeEntity = MY_ENTITIES.find((e) => e.id === activeEntityId) ?? MY_ENTITIES[0];
   const activeTool = TOOLS.find((t) => t.id === activeView);
+  const currentData = ENTITY_DATA[activeEntityId] ?? ENTITY_DATA["1"];
 
   const renderActiveView = () => {
     switch (activeView) {
@@ -399,7 +448,7 @@ export default function EntityPage() {
                     نظرة سريعة
                   </motion.p>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    {STATS.map((card, i) => (
+                    {currentData.stats.map((card, i) => (
                       <StatCardComponent key={card.label} card={card} index={i + 1} />
                     ))}
                   </div>
@@ -437,7 +486,7 @@ export default function EntityPage() {
                       رؤية تنموي AI: كيانك في تطور مستمر 🚀
                     </p>
                     <p className="text-[12px] text-slate-500 dark:text-slate-400 leading-relaxed">
-                      بناءً على بيانات الشهر الماضي، يُوصى برفع الاستهداف لـ 600 أسرة في المبادرة البيئية.
+                      {currentData.aiNote}
                     </p>
                   </div>
                 </motion.div>

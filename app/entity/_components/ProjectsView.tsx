@@ -5,19 +5,48 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Plus, X, Target, Calendar, MapPin, Users, Coins, FileText, UploadCloud, CheckCircle2 } from "lucide-react";
 import { createPortal } from "react-dom";
 
+const DISTRICTS_MAP: Record<string, string[]> = {
+  "الرياض": ["شمال الرياض", "شرق الرياض", "غرب الرياض", "جنوب الرياض"],
+  "مكة المكرمة": ["حي العزيزية", "حي الشوقية", "حي بطحاء قريش", "المنطقة المركزية"],
+  "المنطقة الشرقية": ["الدمام", "الخبر", "الجبيل", "الأحساء"],
+  "عسير": ["أبها", "خميس مشيط", "محايل عسير"],
+};
+
 export function ProjectsView() {
   const [projects, setProjects] = useState([
-    { title: "حملة الشتاء الدافئ", progress: 75, target: 80000, collected: 60000, daysLeft: 12, category: "أسر محتاجة", region: "الرياض" },
-    { title: "سقيا الماء وحفر الآبار", progress: 40, target: 50000, collected: 20000, daysLeft: 25, category: "سكان القرى", region: "عسير" },
+    { 
+      title: "حملة الشتاء الدافئ", 
+      progress: 75, 
+      target: 80000, 
+      collected: 60000, 
+      daysLeft: 12, 
+      category: "أسر فقيرة", 
+      region: "الرياض",
+      district: "شمال الرياض",
+      goal: "إسكان اجتماعي"
+    },
+    { 
+      title: "سقيا الماء وحفر الآبار", 
+      progress: 40, 
+      target: 50000, 
+      collected: 20000, 
+      daysLeft: 25, 
+      category: "سكان القرى", 
+      region: "عسير",
+      district: "أبها",
+      goal: "مياه وصحة"
+    },
   ]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
-    category: "أسر محتاجة",
+    category: "أسر فقيرة",
     target: "",
     region: "الرياض",
+    district: "شمال الرياض",
+    goal: "تنمية بيئية",
     description: "",
     daysLeft: "30",
     fileName: "",
@@ -43,15 +72,19 @@ export function ProjectsView() {
       daysLeft: parseInt(formData.daysLeft) || 30,
       category: formData.category,
       region: formData.region,
+      district: formData.district,
+      goal: formData.goal,
     };
 
     setProjects([newProj, ...projects]);
     setIsModalOpen(false);
     setFormData({
       title: "",
-      category: "أسر محتاجة",
+      category: "أسر فقيرة",
       target: "",
       region: "الرياض",
+      district: "شمال الرياض",
+      goal: "تنمية بيئية",
       description: "",
       daysLeft: "30",
       fileName: "",
@@ -88,10 +121,19 @@ export function ProjectsView() {
               </div>
 
               {/* Badges */}
-              <div className="flex items-center gap-2 text-[11px] font-semibold text-slate-450 dark:text-slate-500">
+              <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold text-slate-450 dark:text-slate-500">
                 <span className="bg-slate-100 dark:bg-slate-800 text-slate-650 dark:text-slate-350 px-2 py-0.5 rounded border border-slate-200/50 dark:border-white/5">{p.category}</span>
+                {p.goal && (
+                  <>
+                    <span>•</span>
+                    <span className="bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 px-2 py-0.5 rounded border border-indigo-100/60 dark:border-indigo-900/20">{p.goal}</span>
+                  </>
+                )}
                 <span>•</span>
-                <span className="flex items-center gap-0.5"><MapPin className="w-3 h-3 text-slate-400" /> {p.region}</span>
+                <span className="flex items-center gap-0.5">
+                  <MapPin className="w-3 h-3 text-slate-400" /> {p.region}
+                  {p.district && ` - ${p.district}`}
+                </span>
               </div>
             </div>
 
@@ -151,9 +193,27 @@ export function ProjectsView() {
                   </div>
                 </div>
 
-                {/* Grid */}
+                {/* Classification Grid (Goal & Audience) */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Category */}
+                  {/* Goal */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">الهدف الرئيسي / تصنيف البرنامج</label>
+                    <div className="relative">
+                      <Target className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-450 dark:text-slate-500 pointer-events-none" />
+                      <select
+                        value={formData.goal}
+                        onChange={(e) => setFormData({ ...formData, goal: e.target.value })}
+                        className="w-full pr-10 pl-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900/50 text-[14px] text-slate-800 dark:text-slate-100 outline-none transition-all focus:bg-white dark:focus:bg-slate-900 focus:border-teal-400 dark:focus:border-teal-500 appearance-none cursor-pointer"
+                      >
+                        <option value="تنمية بيئية">تنمية بيئية</option>
+                        <option value="إسكان اجتماعي">إسكان اجتماعي</option>
+                        <option value="مياه وصحة">مياه وصحة</option>
+                        <option value="تعليم">تعليم</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Category / Audience */}
                   <div className="space-y-1.5">
                     <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">الفئة المستهدفة</label>
                     <div className="relative">
@@ -163,19 +223,24 @@ export function ProjectsView() {
                         onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                         className="w-full pr-10 pl-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900/50 text-[14px] text-slate-800 dark:text-slate-100 outline-none transition-all focus:bg-white dark:focus:bg-slate-900 focus:border-teal-400 dark:focus:border-teal-500 appearance-none cursor-pointer"
                       >
+                        <option value="أسر فقيرة">أسر فقيرة</option>
+                        <option value="المجتمع المحلي">المجتمع المحلي</option>
+                        <option value="سكان القرى">سكان القرى</option>
                         <option value="أيتام">أيتام</option>
-                        <option value="أسر محتاجة">أسر محتاجة</option>
                         <option value="طلاب علم">طلاب علم</option>
                         <option value="أرامل ومطلقات">أرامل ومطلقات</option>
                       </select>
                     </div>
                   </div>
+                </div>
 
+                {/* Financials & Duration Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Target Amount */}
                   <div className="space-y-1.5">
                     <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">المبلغ المستهدف (ر.س)</label>
                     <div className="relative">
-                      <Coins className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-450 dark:text-slate-500" />
+                      <Coins className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-455 dark:text-slate-500" />
                       <input
                         type="number"
                         required
@@ -187,33 +252,12 @@ export function ProjectsView() {
                       />
                     </div>
                   </div>
-                </div>
-
-                {/* Grid 2 */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Region */}
-                  <div className="space-y-1.5">
-                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">المنطقة الجغرافية</label>
-                    <div className="relative">
-                      <MapPin className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-450 dark:text-slate-500 pointer-events-none" />
-                      <select
-                        value={formData.region}
-                        onChange={(e) => setFormData({ ...formData, region: e.target.value })}
-                        className="w-full pr-10 pl-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900/50 text-[14px] text-slate-800 dark:text-slate-100 outline-none transition-all focus:bg-white dark:focus:bg-slate-900 focus:border-teal-400 dark:focus:border-teal-500 appearance-none cursor-pointer"
-                      >
-                        <option value="الرياض">الرياض</option>
-                        <option value="مكة المكرمة">مكة المكرمة</option>
-                        <option value="المنطقة الشرقية">المنطقة الشرقية</option>
-                        <option value="عسير">عسير</option>
-                      </select>
-                    </div>
-                  </div>
 
                   {/* End date / days left */}
                   <div className="space-y-1.5">
                     <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">مدة البرنامج (أيام)</label>
                     <div className="relative">
-                      <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-450 dark:text-slate-500" />
+                      <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-455 dark:text-slate-500" />
                       <input
                         type="number"
                         required
@@ -223,6 +267,49 @@ export function ProjectsView() {
                         onChange={(e) => setFormData({ ...formData, daysLeft: e.target.value })}
                         className="w-full pr-10 pl-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900/50 text-[14px] text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-650 outline-none transition-all focus:bg-white dark:focus:bg-slate-900 focus:border-teal-400 dark:focus:border-teal-500"
                       />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Geography Grid (Region & District) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Region */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">المنطقة الجغرافية</label>
+                    <div className="relative">
+                      <MapPin className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-455 dark:text-slate-500 pointer-events-none" />
+                      <select
+                        value={formData.region}
+                        onChange={(e) => {
+                          const newRegion = e.target.value;
+                          const defaultDistrict = DISTRICTS_MAP[newRegion]?.[0] || "";
+                          setFormData({ ...formData, region: newRegion, district: defaultDistrict });
+                        }}
+                        className="w-full pr-10 pl-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900/50 text-[14px] text-slate-800 dark:text-slate-100 outline-none transition-all focus:bg-white dark:focus:bg-slate-900 focus:border-teal-400 dark:focus:border-teal-500 appearance-none cursor-pointer"
+                      >
+                        <option value="الرياض">الرياض</option>
+                        <option value="مكة المكرمة">مكة المكرمة</option>
+                        <option value="المنطقة الشرقية">المنطقة الشرقية</option>
+                        <option value="عسير">عسير</option>
+                      </select>
+                    </div>
+                  </div>
+                  {/* District */}
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">المدينة / الحي</label>
+                    <div className="relative">
+                      <MapPin className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-455 dark:text-slate-500 pointer-events-none" />
+                      <select
+                        value={formData.district}
+                        onChange={(e) => setFormData({ ...formData, district: e.target.value })}
+                        className="w-full pr-10 pl-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900/50 text-[14px] text-slate-800 dark:text-slate-100 outline-none transition-all focus:bg-white dark:focus:bg-slate-900 focus:border-teal-400 dark:focus:border-teal-500 appearance-none cursor-pointer"
+                      >
+                        {DISTRICTS_MAP[formData.region]?.map((d) => (
+                          <option key={d} value={d}>
+                            {d}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </div>
                 </div>
